@@ -26,10 +26,14 @@ Neo4j
 
 How to run:
 ========== 
- Step1: Modify properties file specific to nosql database. For example, in case of Cassandra it is db-cassandra.properties. 
+ <b>Step1: <b>
+ 
+  Modify properties file specific to nosql database. For example, in case of Cassandra it is db-cassandra.properties. 
  You need to modify for "ycsbjar.location" and "clientjar.location" according to system configuration.
  
- Step2: Command to run a test is as follows:
+ <b>Step2: <b>
+ 
+ Command to run a test is as follows:
  mvn -Dtest=RedisYCSBTest test -DfileName=src/main/resources/db-redis.properties
  Here "RedisYCSBTest" is junit name and -DfileName is for corresponding properties file.
  {Above command to execute Redis YCSB benchmark test}. 
