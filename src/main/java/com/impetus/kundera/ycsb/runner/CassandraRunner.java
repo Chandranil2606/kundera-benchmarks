@@ -1,0 +1,114 @@
+/**
+ * Copyright 2012 Impetus Infotech.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.impetus.kundera.ycsb.runner;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.configuration.Configuration;
+
+import com.impetus.kundera.ycsb.utils.CassandraOperationUtils;
+import com.impetus.kundera.ycsb.utils.HibernateCRUDUtils;
+import com.impetus.kundera.ycsb.utils.MailUtils;
+import common.Logger;
+
+/**
+ * @author Vivek Mishra
+ * 
+ */
+public class CassandraRunner extends YCSBRunner
+{
+    private CassandraOperationUtils operationUtils;
+
+    private String cassandraServerLocation;
+
+    private static Logger logger = Logger.getLogger(CassandraRunner.class);
+
+    public CassandraRunner(final String propertyFile, final Configuration config)
+    {
+        super(propertyFile,config);
+        this.cassandraServerLocation = config.getString("server.location");
+        operationUtils = new CassandraOperationUtils();
+        crudUtils = new HibernateCRUDUtils();
+    }
+
+    @Override
+    protected void startServer(Runtime runTime)
+    {
+        try
+        {
+            operationUtils.startCassandraServer(false, runTime, cassandraServerLocation);
+     //       operationUtils.dropKeyspace(schema,host,port);
+            if (!currentClient.equalsIgnoreCase("com.impetus.kundera.ycsb.benchmark.HectorClient"))
+            {
+              //  operationUtils.createKeysapce(schema, false, host, columnFamilyOrTable,port);
+            }
+        }
+        catch (IOException e)
+        {
+            logger.error(e);
+            throw new RuntimeException(e);
+        }
+        catch (InterruptedException e)
+        {
+            logger.error(e);
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    protected void stopServer(Runtime runTime)
+    {/*
+        try
+        {
+            operationUtils.stopCassandraServer(true, runTime);
+        }
+        catch (IOException e)
+        {
+            logger.error(e);
+            throw new RuntimeException(e);
+        }
+        catch (InterruptedException e)
+        {
+            logger.error(e);
+            throw new RuntimeException(e);
+        }
+
+    */}
+
+    protected void sendMail()
+    {
+        Map<String, Double> delta = new HashMap<String, Double>();
+        double kunderaPelopsToPelopsDelta = ((timeTakenByClient.get(clients[1]) - timeTakenByClient.get(clients[3]))
+                / timeTakenByClient.get(clients[1]) * 100);
+        double kunderaThriftToThriftDelta = ((timeTakenByClient.get(clients[0]) - timeTakenByClient.get(clients[2]))
+                / timeTakenByClient.get(clients[0]) * 100);
+        double kunderaPelopsToHectorDelta = ((timeTakenByClient.get(clients[1]) - timeTakenByClient.get(clients[4]))
+                / timeTakenByClient.get(clients[1]) * 100);
+        delta.put("kunderaPelopsToPelopsDelta", kunderaPelopsToPelopsDelta);
+        delta.put("kunderaThriftToThriftDelta", kunderaThriftToThriftDelta);
+        delta.put("kunderaPelopsToHectorDelta", kunderaPelopsToHectorDelta);
+
+        if ((kunderaPelopsToHectorDelta > 10.00) || (kunderaPelopsToPelopsDelta > 10.00)
+                || (kunderaThriftToThriftDelta > 10.00))
+        {
+            MailUtils.sendMail(delta, runType, "cassandra");
+        }
+
+    }
+}
