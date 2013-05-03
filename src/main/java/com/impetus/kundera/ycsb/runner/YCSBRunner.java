@@ -95,6 +95,7 @@ public abstract class YCSBRunner
         // id column of performanceNoInfo table
         Date id = new Date();
         
+        int counter=1;
         for (String client : clients)
         {
             currentClient = client;
@@ -103,7 +104,8 @@ public abstract class YCSBRunner
             {
                 Runtime runtime = Runtime.getRuntime();
                 //start server
-                startServer(runtime);
+                startServer(performDelete(counter),runtime);
+                counter++;
                 String runCommand = getCommandString(client,workLoad);
 
                 logger.info(runCommand);    
@@ -203,9 +205,24 @@ public abstract class YCSBRunner
         return command.toString();
     }
 
-    protected abstract void startServer(Runtime runTime);
+    protected abstract void startServer(boolean performDelete, Runtime runTime);
     
     protected abstract void stopServer(Runtime runTime);
     protected abstract void sendMail();
-    
+
+    /**
+     * If multiple clients are running, clear data for first time but only in case of load.
+     * 
+     * @param counter client counter
+     * @return true, if delete needs to be performed, else false.s
+     */
+    private boolean performDelete(int counter)
+    {
+    	if(runType.equals("load"))
+    	{
+    		return counter == 1;
+    	}
+    	
+    	return false;
+    }
 }

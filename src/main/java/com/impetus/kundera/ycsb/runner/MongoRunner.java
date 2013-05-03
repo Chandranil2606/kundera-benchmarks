@@ -53,30 +53,25 @@ public class MongoRunner extends YCSBRunner
 
    
     @Override
-    protected void startServer(Runtime runTime)
-    {
-      // Do nothing.
-    }
+    protected void startServer(boolean performCleanUp, Runtime runTime)
+ {
+		if (performCleanUp) {
+			try {
+				operationUtils.cleanDatabase(url, schema);
+			} catch (IOException e) {
+				logger.error(e);
+				throw new RuntimeException(e);
+			} catch (InterruptedException e) {
+				logger.error(e);
+				throw new RuntimeException(e);
+			}
+		}
+	}
 
     @Override
     protected void stopServer(Runtime runTime)
     {
-        /*
-        try
-        {
-            operationUtils.cleanDatabase(url, schema);
-        }
-        catch (IOException e)
-        {
-            logger.error(e);
-            throw new RuntimeException(e);
-        }
-        catch (InterruptedException e)
-        {
-            logger.error(e);
-            throw new RuntimeException(e);
-        }
-        */
+        // Do nothing.
     }
 
     protected void sendMail()

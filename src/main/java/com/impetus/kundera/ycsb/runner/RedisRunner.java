@@ -48,29 +48,26 @@ public class RedisRunner extends YCSBRunner
     }
 
     @Override
-    protected void startServer(Runtime runTime)
+    protected void startServer(boolean performCleanup,Runtime runTime)
     {
-        // do nothing.
+		if (performCleanup) {
+			try {
+				operationUtils.cleanRedisDatabase(host, port, password);
+			} catch (IOException e) {
+				logger.error(e);
+				throw new RuntimeException(e);
+			} catch (InterruptedException e) {
+				logger.error(e);
+				throw new RuntimeException(e);
+			}
+		}
     }
 
     @Override
     protected void stopServer(Runtime runTime)
-    {/*
-        try
-        {
-            operationUtils.cleanRedisDatabase(host, port, password);
-        }
-        catch (IOException e)
-        {
-            logger.error(e);
-            throw new RuntimeException(e);
-        }
-        catch (InterruptedException e)
-        {
-            logger.error(e);
-            throw new RuntimeException(e);
-        }
-    */}
+    {
+    	// Do nothing.
+    }
 
     @Override
     protected void sendMail()

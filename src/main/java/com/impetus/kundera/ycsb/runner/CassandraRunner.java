@@ -47,15 +47,23 @@ public class CassandraRunner extends YCSBRunner
     }
 
     @Override
-    protected void startServer(Runtime runTime)
+    protected void startServer(boolean performDelete, Runtime runTime)
     {
         try
         {
-            operationUtils.startCassandraServer(false, runTime, cassandraServerLocation);
-     //       operationUtils.dropKeyspace(schema,host,port);
+            operationUtils.startCassandraServer(performDelete, runTime, cassandraServerLocation);
+            
+            // When running with t. no need to load up these.
+            
+            if(performDelete)
+            {
+            	operationUtils.dropKeyspace(schema,host,port);
+            }
+         
             if (!currentClient.equalsIgnoreCase("com.impetus.kundera.ycsb.benchmark.HectorClient"))
             {
-              //  operationUtils.createKeysapce(schema, false, host, columnFamilyOrTable,port);
+            	// When running with "t" option . no need to load up these.
+                operationUtils.createKeysapce(schema, performDelete, host, columnFamilyOrTable,port);
             }
         }
         catch (IOException e)
@@ -73,10 +81,12 @@ public class CassandraRunner extends YCSBRunner
 
     @Override
     protected void stopServer(Runtime runTime)
-    {/*
+    {
+    	// No need to run with "t" option.
+    	
         try
         {
-            operationUtils.stopCassandraServer(true, runTime);
+            operationUtils.stopCassandraServer(false, runTime);
         }
         catch (IOException e)
         {
@@ -89,7 +99,7 @@ public class CassandraRunner extends YCSBRunner
             throw new RuntimeException(e);
         }
 
-    */}
+    }
 
     protected void sendMail()
     {

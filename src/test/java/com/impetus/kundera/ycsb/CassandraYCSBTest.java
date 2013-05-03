@@ -17,6 +17,7 @@ package com.impetus.kundera.ycsb;
 
 import java.io.IOException;
 
+import org.apache.commons.configuration.ConfigurationException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,8 @@ import org.junit.Test;
 import com.impetus.kundera.ycsb.runner.CassandraRunner;
 
 /**
+ * Cassandra Kundera YCSB benchmarking.
+ * 
  * @author vivek.mishra
  * 
  */
@@ -36,24 +39,31 @@ public class CassandraYCSBTest extends YCSBBaseTest
     @Before
     public void setUp() throws Exception
     {
-        String propsFileName = System.getProperty("fileName");
         super.setUp(propsFileName);
-        runner = new CassandraRunner(propsFileName, config);
-
-    }
-
-//    @Test
-    public void bulkLoadTest() throws IOException
-    {
-        onBulkLoad();
     }
 
     @Test
-    public void concurrentWorkloadTest() throws IOException
+    public void concurrentWorkloadTest() throws IOException, ConfigurationException
     {
-        onConcurrentBulkLoad();
+        onChangeRunType("load");
+        process();
     }
     
+    
+    @Test
+    public void testRead() throws Exception
+    {
+    	onChangeRunType("t");
+    	onRead();
+    }
+	
+    @Test
+    public void testUpdate() throws Exception
+    {
+    	onChangeRunType("t");
+    	onUpdate();
+    }
+	
     /**
      * @throws java.lang.Exception
      */
@@ -62,5 +72,16 @@ public class CassandraYCSBTest extends YCSBBaseTest
     {
         
     }
+
+
+    /**
+     * @param runType
+     * @throws ConfigurationException
+     */
+    protected void onChangeRunType(final String runType) throws ConfigurationException {
+		config.setProperty("run.type",runType);
+    	config.save();
+        runner = new CassandraRunner(propsFileName, config);
+	}
 
 }

@@ -17,6 +17,7 @@ package com.impetus.kundera.ycsb;
 
 import java.io.IOException;
 
+import org.apache.commons.configuration.ConfigurationException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,35 +25,61 @@ import org.junit.Test;
 import com.impetus.kundera.ycsb.runner.RedisRunner;
 
 /**
+ * Redis Cloud YCSB benchmark.
+ * 
  * @author vivek.mishra
  *
  */
 public class RedisYCSBTest extends YCSBBaseTest
 {
 
+    /**
+     * @throws java.lang.Exception
+     */
     @Before
     public void setUp() throws Exception
     {
-        String propsFileName = System.getProperty("fileName");
         super.setUp(propsFileName);
-        runner = new RedisRunner(propsFileName, config);
-    }
-
-    @After
-    public void tearDown() throws Exception
-    {
-    }
-
-//    @Test
-    public void bulkLoadTest() throws IOException
-    {
-        onBulkLoad();
     }
 
     @Test
-    public void concurrentWorkloadTest() throws IOException
+    public void concurrentWorkloadTest() throws IOException, ConfigurationException
     {
-        onConcurrentBulkLoad();
+        onChangeRunType("load");
+        process();
+    }
+    
+    
+    @Test
+    public void testRead() throws Exception
+    {
+    	onChangeRunType("t");
+    	onRead();
+    }
+	
+    @Test
+    public void testUpdate() throws Exception
+    {
+    	onChangeRunType("t");
+    	onUpdate();
+    }
+	
+    /**
+     * @throws java.lang.Exception
+     */
+    @After
+    public void tearDown() throws Exception
+    {
+        // Do nothing.
     }
 
+    /**
+     * @param runType
+     * @throws ConfigurationException
+     */
+    protected void onChangeRunType(final String runType) throws ConfigurationException {
+		config.setProperty("run.type",runType);
+    	config.save();
+        runner = new RedisRunner(propsFileName, config);
+	}
 }

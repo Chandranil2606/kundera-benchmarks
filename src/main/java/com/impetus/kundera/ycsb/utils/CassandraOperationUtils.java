@@ -140,7 +140,7 @@ public class CassandraOperationUtils
         logger.info("stopped..............");
     }
 
-    public void createKeysapce(String keyspace, boolean createIdx, String host, String columnFamily, int port)
+    public void createKeysapce(String keyspace, boolean performCleanup, String host, String columnFamily, int port)
             throws InterruptedException, IOException
     {
         logger.info("creating keyspace " + keyspace + " and column family " + columnFamily);
@@ -150,11 +150,15 @@ public class CassandraOperationUtils
             initiateClient(host, this.runTime, port);
         }
         KsDef ksDef = null;
+        
         try
         {
             ksDef = cassandra_client.describe_keyspace(keyspace);
-            dropKeyspace(keyspace, host, port);
-            createKeyspaceAndColumnFamily(keyspace, columnFamily, ksDef);
+            if(performCleanup)
+            {
+            	dropKeyspace(keyspace, host, port);
+            	createKeyspaceAndColumnFamily(keyspace, columnFamily, ksDef);
+            }
         }
         catch (NotFoundException e)
         {
