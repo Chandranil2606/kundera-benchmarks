@@ -218,7 +218,7 @@ public class KunderaHBaseClient extends DB
 
     public static void main(String[] args)
     {
-        KunderaThriftClient cli = new KunderaThriftClient();
+        KunderaHBaseClient cli = new KunderaHBaseClient();
 
         Properties props = new Properties();
 
@@ -254,7 +254,7 @@ public class KunderaHBaseClient extends DB
             System.out.println("[" + s + "]=[" + result.get(s) + "]");
         }
 
-        res = cli.delete("usertable", "BrianFrankCooper");
+//        res = cli.delete("usertable", "BrianFrankCooper");
         System.out.println("Result of delete: " + res);
 
     }
