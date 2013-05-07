@@ -79,7 +79,7 @@ public class HBaseClient extends com.yahoo.ycsb.DB
             _debug=true;
         }
 
-        _columnFamily = getProperties().getProperty("columnfamily");
+        _columnFamily = getProperties().getProperty("columnfamilyOrTable");
         if (_columnFamily == null)
         {
             System.err.println("Error, must specify a columnfamily for HBase table");

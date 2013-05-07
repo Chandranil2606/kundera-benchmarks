@@ -21,11 +21,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author Kuldeep Mishra
+ * @author Vivek Mishra
  * 
  */
 @Entity
-@Table(name = "kunderauser", schema = "kundera@kundera_hbase_pu")
+@Table(name = "user", schema = "kundera@kundera_hbase_pu")
 public class HBaseUser
 {
 
