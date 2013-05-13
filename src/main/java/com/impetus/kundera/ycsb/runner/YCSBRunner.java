@@ -155,7 +155,9 @@ public abstract class YCSBRunner
                         logger.info("MaxLatency " + line);
                     }
 */                    
-//                     logger.info(line);
+//                    if(!(line.contains("CLEANUP") || line.contains("UPDATE") || line.contains("INSERT") )){
+//                        logger.info(line);
+//                    }
                 }
 
                 timeTakenByClient.put(client, totalTime);

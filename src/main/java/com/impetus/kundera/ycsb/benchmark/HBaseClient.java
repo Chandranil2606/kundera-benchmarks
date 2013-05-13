@@ -42,6 +42,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import com.yahoo.ycsb.ByteArrayByteIterator;
 import com.yahoo.ycsb.ByteIterator;
 import com.yahoo.ycsb.DBException;
+import com.yahoo.ycsb.StringByteIterator;
 import com.yahoo.ycsb.measurements.Measurements;
 
 /**
@@ -80,6 +81,9 @@ public class HBaseClient extends com.yahoo.ycsb.DB
         }
 
         _columnFamily = getProperties().getProperty("columnfamilyOrTable");
+        _table = getProperties().getProperty("schema");
+//        System.out.println(_table);
+        
         if (_columnFamily == null)
         {
             System.err.println("Error, must specify a columnfamily for HBase table");
@@ -115,7 +119,7 @@ public class HBaseClient extends com.yahoo.ycsb.DB
         synchronized (tableLock) {
             _hTable = new HTable(config, table);
             //2 suggestions from http://ryantwopointoh.blogspot.com/2009/01/performance-of-hbase-importing.html
-            _hTable.setAutoFlush(false);
+            _hTable.setAutoFlush(true);
             _hTable.setWriteBufferSize(1024*1024*12);
             //return hTable;
         }
@@ -134,7 +138,7 @@ public class HBaseClient extends com.yahoo.ycsb.DB
     public int read(String table, String key, Set<String> fields, HashMap<String,ByteIterator> result)
     {
         //if this is a "new" table, init HTable object.  Else, use existing one
-        if (!_table.equals(table)) {
+        /*if (!_table.equals(table)) {
             _hTable = null;
             try
             {
@@ -146,7 +150,20 @@ public class HBaseClient extends com.yahoo.ycsb.DB
                 System.err.println("Error accessing HBase table: "+e);
                 return ServerError;
             }
+        }*/
+        
+        try
+        {
+            if(_hTable == null)
+            {
+                getHTable(_table);
+            }
+        }catch (IOException e)
+        {
+            System.err.println("Error accessing HBase table: "+e);
+            return ServerError;
         }
+
 
         Result r = null;
         try
@@ -293,7 +310,19 @@ public class HBaseClient extends com.yahoo.ycsb.DB
     public int update(String table, String key, HashMap<String,ByteIterator> values)
     {
         //if this is a "new" table, init HTable object.  Else, use existing one
-        if (!_table.equals(table)) {
+        try
+        {
+            if(_hTable == null)
+            {
+                getHTable(_table);
+            }
+        }catch (IOException e)
+        {
+            System.err.println("Error accessing HBase table: "+e);
+            return ServerError;
+        }
+
+/*        if (!_table.equals(table)) {
             _hTable = null;
             try
             {
@@ -306,7 +335,7 @@ public class HBaseClient extends com.yahoo.ycsb.DB
                 return ServerError;
             }
         }
-
+*/
 
         if (_debug) {
             System.out.println("Setting up put for key: "+key);
@@ -352,7 +381,8 @@ public class HBaseClient extends com.yahoo.ycsb.DB
      */
     public int insert(String table, String key, HashMap<String,ByteIterator> values)
     {
-        return update(table,key,values);
+        System.out.println(_table);
+        return update(_table,key,values);
     }
 
     /**
@@ -414,7 +444,7 @@ public class HBaseClient extends com.yahoo.ycsb.DB
         final String columnfamily=args[1];
 
 
-        final int opcount=Integer.parseInt(args[2])/threadcount;
+        final int opcount=10;
 
         Vector<Thread> allthreads=new Vector<Thread>();
 
@@ -431,8 +461,9 @@ public class HBaseClient extends com.yahoo.ycsb.DB
                         HBaseClient cli=new HBaseClient();
 
                         Properties props=new Properties();
-                        props.setProperty("columnfamily",columnfamily);
-                        props.setProperty("debug","true");
+                        props.setProperty("columnfamilyOrTable",columnfamily);
+                        props.setProperty("schema","usertable");
+//                        props.setProperty("debug","true");
                         cli.setProperties(props);
 
                         cli.init();
@@ -447,6 +478,12 @@ public class HBaseClient extends com.yahoo.ycsb.DB
                             String key="user"+keynum;
                             long st=System.currentTimeMillis();
                             int rescode;
+                            HashMap<String, ByteIterator> vals = new HashMap<String, ByteIterator>();
+                            vals.put("age", new StringByteIterator("57"));
+                            vals.put("middlename", new StringByteIterator("bradley"));
+                            vals.put("favoritecolor", new StringByteIterator("blue"));
+                            cli.insert("usertable", key, vals);
+                        }
                             /*
                             HashMap hm = new HashMap();
                             hm.put("field1","value1");
@@ -461,11 +498,11 @@ public class HBaseClient extends com.yahoo.ycsb.DB
                             //rescode=cli.delete("table1",key);
                             rescode=cli.read("table1", key, s, result);
                             */
-                            HashSet<String> scanFields = new HashSet<String>();
-                            scanFields.add("field1");
-                            scanFields.add("field3");
-                            Vector<HashMap<String,ByteIterator>> scanResults = new Vector<HashMap<String,ByteIterator>>();
-                            rescode = cli.scan("table1","user2",20,null,scanResults);
+//                            HashSet<String> scanFields = new HashSet<String>();
+//                            scanFields.add("field1");
+//                            scanFields.add("field3");
+//                            Vector<HashMap<String,ByteIterator>> scanResults = new Vector<HashMap<String,ByteIterator>>();
+/*                            rescode = cli.scan("usertable","user2",20,null,scanResults);
 
                             long en=System.currentTimeMillis();
 
@@ -476,12 +513,12 @@ public class HBaseClient extends com.yahoo.ycsb.DB
                                 System.out.println("Error "+rescode+" for "+key);
                             }
 
-                            if (i%1==0)
+*//*                            if (i%1==0)
                             {
                                 System.out.println(i+" operations, average latency: "+(((double)accum)/((double)i)));
                             }
                         }
-
+*/
                         //System.out.println("Average latency: "+(((double)accum)/((double)opcount)));
                         //System.out.println("Average get latency: "+(((double)cli.TotalGetTime)/((double)cli.TotalGetOps)));
                     }
