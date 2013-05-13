@@ -32,14 +32,14 @@ public abstract class YCSBBaseTest
     protected PropertiesConfiguration config;
     protected String workLoadPackage;
     protected YCSBRunner runner;
-	protected String propsFileName=System.getProperty("fileName");
+    protected String propsFileName=System.getProperty("fileName");
 
     /**
      * @throws java.lang.Exception
      */
-    protected void setUp(final String propertyFileName) throws Exception
+    protected void setUp() throws Exception
     {
-        config = new PropertiesConfiguration(propertyFileName);
+        config = new PropertiesConfiguration(propsFileName);
         workLoadPackage = config.getString("workload.dir","src/main/resources/workloads");
     }
 
