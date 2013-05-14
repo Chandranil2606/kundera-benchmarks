@@ -83,7 +83,7 @@ public abstract class YCSBRunner
         releaseNo = config.getDouble("release.no");
         runType = config.getString("run.type", "load");
         port = config.getInt("port");
-        password= config.getString(password);
+        password= config.getString("password");
         clients= config.getStringArray("clients");
     }
 
