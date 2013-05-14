@@ -39,14 +39,7 @@ public class HBaseYCSBTest extends YCSBBaseTest
     @Before
     public void setUp() throws Exception
     {
-        // in case property file name is not set as system property.
-        
-        if(propsFileName == null)
-        {
-            propsFileName = "src/main/resources/db-hbase.properties";
-        }
-
-        super.setUp();
+        super.setUp("src/main/resources/db-hbase.properties");
     }
 
     @Test
@@ -57,14 +50,14 @@ public class HBaseYCSBTest extends YCSBBaseTest
     }
     
     
-//    @Test
+    @Test
     public void testRead() throws Exception
     {
     	onChangeRunType("t");
     	onRead();
     }
 	
-//    @Test
+    @Test
     public void testUpdate() throws Exception
     {
     	onChangeRunType("t");

@@ -39,12 +39,7 @@ public class RedisYCSBTest extends YCSBBaseTest
     public void setUp() throws Exception
     {
         // in case property file name is not set as system property.
-        
-        if(propsFileName == null)
-        {
-            propsFileName = "src/main/resources/db-redis.properties";
-        }
-        super.setUp();
+        super.setUp("src/main/resources/db-redis.properties");
     }
 
     @Test

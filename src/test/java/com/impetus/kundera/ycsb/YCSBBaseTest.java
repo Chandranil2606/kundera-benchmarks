@@ -19,6 +19,9 @@ import java.io.IOException;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
+
+import scala.io.BytePickle.Def;
 
 import com.impetus.kundera.ycsb.runner.CassandraRunner;
 import com.impetus.kundera.ycsb.runner.YCSBRunner;
@@ -37,9 +40,9 @@ public abstract class YCSBBaseTest
     /**
      * @throws java.lang.Exception
      */
-    protected void setUp() throws Exception
+    protected void setUp(final String defaultPath) throws Exception
     {
-        config = new PropertiesConfiguration(propsFileName);
+        config = new PropertiesConfiguration(!StringUtils.isBlank(propsFileName)? propsFileName:defaultPath);
         workLoadPackage = config.getString("workload.dir","src/main/resources/workloads");
     }
 
