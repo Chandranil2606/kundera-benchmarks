@@ -79,7 +79,7 @@
 			<property name="kundera.port" value="6379" />
 			<property name="kundera.keyspace" value="0" />
 			<property name="kundera.dialect" value="redis" />
-                      <!--  <property name="kundera.password" value="Kundera@123" /> -->
+            <property name="kundera.password" value="Kundera@123" />
 			<property name="kundera.client.lookup.class" value="com.impetus.client.redis.RedisClientFactory" />
 			<property name="kundera.cache.provider.class"
 				value="com.impetus.kundera.cache.ehcache.EhCacheProvider" />
