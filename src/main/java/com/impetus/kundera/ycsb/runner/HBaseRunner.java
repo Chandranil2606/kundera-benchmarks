@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.commons.configuration.Configuration;
 
 import com.impetus.kundera.ycsb.utils.HBaseOperationUtils;
+import com.impetus.kundera.ycsb.utils.HibernateCRUDUtils;
 import com.impetus.kundera.ycsb.utils.MailUtils;
 
 /**
@@ -22,6 +23,7 @@ public class HBaseRunner extends YCSBRunner
     public HBaseRunner(String propertyFile, Configuration config)
     {
         super(propertyFile, config);
+        crudUtils = new HibernateCRUDUtils();
     }
 
     /*
