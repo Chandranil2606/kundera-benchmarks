@@ -15,6 +15,7 @@
  */
 package com.impetus.kundera.ycsb.utils;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -30,12 +31,12 @@ public class MailUtils
     public static void sendMail(Map<String, Double> delta, String operationType, String dataStore)
     {
         String host = "192.168.150.5";
-        int port = 465;
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        // props.put("mail.smtp.port", "465");
-        props.put("mail.smtp.host", host);
+//        int port = 465;
+//        Properties props = new Properties();
+////        props.put("mail.smtp.auth", "true");
+////        props.put("mail.smtp.starttls.enable", "true");
+//        // props.put("mail.smtp.port", "465");
+////        props.put("mail.smtp.host", host);
 
         JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
         emailSender.setHost(host);
@@ -74,5 +75,12 @@ public class MailUtils
         }
         mail.setText(mailBody);
         emailSender.send(mail);
+    }
+
+
+    public static void main(String[] args)
+    {
+        MailUtils mailUtils = new MailUtils();
+        mailUtils.sendMail(new HashMap<String, Double>(), "load", "Cassandra");
     }
 }
