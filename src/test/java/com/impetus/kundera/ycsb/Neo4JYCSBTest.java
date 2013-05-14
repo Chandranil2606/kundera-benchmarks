@@ -40,7 +40,8 @@ public class Neo4JYCSBTest extends YCSBBaseTest
     public void setUp() throws Exception
     {
         // in case property file name is not set as system property.
-        super.setUp("src/main/resources/db-neo4j.properties");
+        System.setProperty("fileName", "src/main/resources/db-neo4j.properties");
+        super.setUp();
     }
 
     @Test

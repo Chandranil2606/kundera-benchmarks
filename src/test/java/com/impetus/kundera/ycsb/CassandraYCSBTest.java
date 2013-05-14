@@ -39,8 +39,9 @@ public class CassandraYCSBTest extends YCSBBaseTest
     @Before
     public void setUp() throws Exception
     {
+        System.setProperty("fileName", "src/main/resources/db-cassandra.properties");
         // in case property file name is not set as system property.
-        super.setUp("src/main/resources/db-cassandra.properties");
+        super.setUp();
     }
 
     @Test

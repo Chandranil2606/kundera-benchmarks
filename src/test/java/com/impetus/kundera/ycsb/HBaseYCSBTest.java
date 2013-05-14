@@ -39,7 +39,8 @@ public class HBaseYCSBTest extends YCSBBaseTest
     @Before
     public void setUp() throws Exception
     {
-        super.setUp("src/main/resources/db-hbase.properties");
+        System.setProperty("fileName", "src/main/resources/db-hbase.properties");
+        super.setUp();
     }
 
     @Test

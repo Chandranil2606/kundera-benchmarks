@@ -40,7 +40,8 @@ public class MongoDBYCSBTest extends YCSBBaseTest
     public void setUp() throws Exception
     {
         // in case property file name is not set as system property.
-        super.setUp("src/main/resources/db-mongo.properties");
+        System.setProperty("fileName", "src/main/resources/db-mongo.properties");
+        super.setUp();
     }
 
     @Test
