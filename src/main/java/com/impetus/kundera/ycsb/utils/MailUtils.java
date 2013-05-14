@@ -42,7 +42,7 @@ public class MailUtils
         emailSender.setHost(host);
         // emailSender.setPort(port);
         emailSender.setUsername("noreply-kundea@impetus.co.in");
-        emailSender.setJavaMailProperties(props);
+//        emailSender.setJavaMailProperties(props);
         SimpleMailMessage mail = new SimpleMailMessage();
 //        mail.setTo(new String[] {"vivek.mishra@impetus.co.in", "amresh.singh@impetus.co.in",
 //                "kuldeep.mishra@impetus.co.in", "vivek.shrivastava@impetus.co.in"});
