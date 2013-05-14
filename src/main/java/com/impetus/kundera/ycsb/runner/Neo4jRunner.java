@@ -60,7 +60,7 @@ public class Neo4jRunner extends YCSBRunner
         Map<String, Double> delta = new HashMap<String, Double>();
 
         double kunderaNativeToNativeDelta = ((timeTakenByClient.get(clients[0]) - timeTakenByClient.get(clients[1]))
-                / timeTakenByClient.get(clients[0]) * 100);
+                / timeTakenByClient.get(clients[1]) * 100);
         delta.put("KunderaNeo4JToNativeDelta", kunderaNativeToNativeDelta);
 
         if (kunderaNativeToNativeDelta > 8.00)

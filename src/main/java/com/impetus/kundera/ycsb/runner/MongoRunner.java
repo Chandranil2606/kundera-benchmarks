@@ -79,7 +79,7 @@ public class MongoRunner extends YCSBRunner
         Map<String, Double> delta = new HashMap<String, Double>();
 
         double kunderaMongoToNativeDelta = ((timeTakenByClient.get(clients[0]) - timeTakenByClient.get(clients[1]))
-                / timeTakenByClient.get(clients[0]) * 100);
+                / timeTakenByClient.get(clients[1]) * 100);
         delta.put("kunderaMongoToNativeDelta", kunderaMongoToNativeDelta);
 
         if (kunderaMongoToNativeDelta > 8.00)

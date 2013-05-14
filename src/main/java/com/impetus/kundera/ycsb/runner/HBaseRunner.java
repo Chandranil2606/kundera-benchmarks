@@ -4,10 +4,13 @@
 package com.impetus.kundera.ycsb.runner;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.configuration.Configuration;
 
 import com.impetus.kundera.ycsb.utils.HBaseOperationUtils;
+import com.impetus.kundera.ycsb.utils.MailUtils;
 
 /**
  * @author vivek.mishra
@@ -66,8 +69,16 @@ public class HBaseRunner extends YCSBRunner
     @Override
     protected void sendMail()
     {
-        // TODO Auto-generated method stub
+        Map<String, Double> delta = new HashMap<String, Double>();
 
+        double kunderaHBaseToNativeDelta = ((timeTakenByClient.get(clients[0]) - timeTakenByClient.get(clients[1]))
+                / timeTakenByClient.get(clients[1]) * 100);
+        delta.put("kunderaHBaseToNativeDelta", kunderaHBaseToNativeDelta);
+
+        if (kunderaHBaseToNativeDelta > 8.00)
+        {
+            MailUtils.sendMail(delta, runType, "hbase");
+        }
     }
 
 }

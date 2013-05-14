@@ -104,17 +104,17 @@ public class CassandraRunner extends YCSBRunner
     protected void sendMail()
     {
         Map<String, Double> delta = new HashMap<String, Double>();
-        double kunderaPelopsToPelopsDelta = ((timeTakenByClient.get(clients[1]) - timeTakenByClient.get(clients[3]))
+        double kunderaPelopsToPelopsDelta = ((timeTakenByClient.get(clients[0]) - timeTakenByClient.get(clients[1]))
                 / timeTakenByClient.get(clients[1]) * 100);
-        double kunderaThriftToThriftDelta = ((timeTakenByClient.get(clients[0]) - timeTakenByClient.get(clients[2]))
-                / timeTakenByClient.get(clients[0]) * 100);
-        double kunderaPelopsToHectorDelta = ((timeTakenByClient.get(clients[1]) - timeTakenByClient.get(clients[4]))
-                / timeTakenByClient.get(clients[1]) * 100);
+        double kunderaThriftToThriftDelta = ((timeTakenByClient.get(clients[2]) - timeTakenByClient.get(clients[3]))
+                / timeTakenByClient.get(clients[3]) * 100);
+//        double kunderaPelopsToHectorDelta = ((timeTakenByClient.get(clients[1]) - timeTakenByClient.get(clients[4]))
+//                / timeTakenByClient.get(clients[1]) * 100);
         delta.put("kunderaPelopsToPelopsDelta", kunderaPelopsToPelopsDelta);
         delta.put("kunderaThriftToThriftDelta", kunderaThriftToThriftDelta);
-        delta.put("kunderaPelopsToHectorDelta", kunderaPelopsToHectorDelta);
+//        delta.put("kunderaPelopsToHectorDelta", kunderaPelopsToHectorDelta);
 
-        if ((kunderaPelopsToHectorDelta > 10.00) || (kunderaPelopsToPelopsDelta > 10.00)
+        if (/*(kunderaPelopsToHectorDelta > 10.00) ||*/ (kunderaPelopsToPelopsDelta > 10.00)
                 || (kunderaThriftToThriftDelta > 10.00))
         {
             MailUtils.sendMail(delta, runType, "cassandra");

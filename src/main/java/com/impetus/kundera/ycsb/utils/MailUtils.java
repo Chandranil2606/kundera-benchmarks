@@ -29,7 +29,7 @@ public class MailUtils
 {
     public static void sendMail(Map<String, Double> delta, String operationType, String dataStore)
     {
-        String host = "mail1.impetus.co.in";
+        String host = "192.168.150.5";
         int port = 465;
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -47,7 +47,6 @@ public class MailUtils
                 "kuldeep.mishra@impetus.co.in", "vivek.shrivastava@impetus.co.in"});
         mail.setFrom("noreply-kundea@impetus.co.in");
 
-        // mail.se
         if (operationType.equalsIgnoreCase("load"))
         {
             operationType = "write";
@@ -57,10 +56,6 @@ public class MailUtils
             operationType = "read";
         }
         mail.setSubject(operationType + " kundera-" + dataStore + "-performance Delta");
-        // String url =
-        // "http://localhost:8080/HealthTrip/activate/activate.action?token="+model.getToken();
-        // mail.setText("Thank you for registering with us, please confirm your activation by clicking link given below:"+"\n"
-        // + url);
 
         String mailBody = null;
         for (String key : delta.keySet())

@@ -74,7 +74,7 @@ public class RedisRunner extends YCSBRunner
     {
         Map<String, Double> delta = new HashMap<String, Double>();
 
-        double kunderaRedisToJedisDelta = ((timeTakenByClient.get(clients[0]) - timeTakenByClient.get(clients[1]))
+        double kunderaRedisToJedisDelta = ((timeTakenByClient.get(clients[1]) - timeTakenByClient.get(clients[0]))
                 / timeTakenByClient.get(clients[0]) * 100);
         delta.put("kunderaRedisToJedisDelta", kunderaRedisToJedisDelta);
 
