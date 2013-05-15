@@ -20,7 +20,9 @@ import java.io.IOException;
 import org.apache.commons.configuration.ConfigurationException;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import com.impetus.kundera.ycsb.runner.CassandraRunner;
 
@@ -30,6 +32,7 @@ import com.impetus.kundera.ycsb.runner.CassandraRunner;
  * @author vivek.mishra
  * 
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CassandraYCSBTest extends YCSBBaseTest
 {
 
