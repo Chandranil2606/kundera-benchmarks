@@ -225,6 +225,7 @@ public class Neo4JNativeClient extends DB
     @Override
     public int update(String table, String key, HashMap<String, ByteIterator> values)
     {
+        return insert(table, key, values);
         /*com.mongodb.DB db = null;
         try
         {
@@ -259,7 +260,7 @@ public class Neo4JNativeClient extends DB
                 db.requestDone();
             }
         }*/
-        return 0;
+//        return 0;
     }
     
     

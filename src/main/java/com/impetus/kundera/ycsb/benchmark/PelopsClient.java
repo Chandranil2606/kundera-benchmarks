@@ -33,7 +33,6 @@ import org.scale7.cassandra.pelops.IConnection;
 import org.scale7.cassandra.pelops.Mutator;
 import org.scale7.cassandra.pelops.Pelops;
 import org.scale7.cassandra.pelops.Selector;
-import org.scale7.cassandra.pelops.pool.IThriftPool;
 
 import com.yahoo.ycsb.ByteIterator;
 import com.yahoo.ycsb.DB;
@@ -197,7 +196,7 @@ public class PelopsClient extends DB {
 	 */
 	public int update(String table, String key,
 			HashMap<String, ByteIterator> values) {
-		return Error;
+		return insert(table, key, values);
 	}
 
 	/**

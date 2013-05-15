@@ -198,7 +198,7 @@ public class KunderaNeo4JClient extends DB
      */
     public int update(String table, String key, HashMap<String, ByteIterator> values)
     {
-        return Error;
+        return insert(table, key, values);
     }
 
     
