@@ -47,7 +47,17 @@ public class CassandraYCSBTest extends YCSBBaseTest
         super.setUp();
     }
 
+    
     @Test
+    public void onTest() throws Exception
+    {
+        testConcurrentWorkload();
+        testRead();
+        testUpdate();
+        
+    }
+    
+//    @Test
     public void testConcurrentWorkload() throws IOException, ConfigurationException
     {
         onChangeRunType("load");
@@ -55,14 +65,14 @@ public class CassandraYCSBTest extends YCSBBaseTest
     }
     
     
-    @Test
+//    @Test
     public void testRead() throws Exception
     {
     	onChangeRunType("t");
     	onRead();
     }
 	
-    @Test
+//    @Test
     public void testUpdate() throws Exception
     {
     	onChangeRunType("t");
