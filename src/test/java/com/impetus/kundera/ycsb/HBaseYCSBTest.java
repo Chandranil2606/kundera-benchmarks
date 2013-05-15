@@ -44,7 +44,7 @@ public class HBaseYCSBTest extends YCSBBaseTest
     }
 
     @Test
-    public void concurrentWorkloadTest() throws IOException, ConfigurationException
+    public void testConcurrentWorkload() throws IOException, ConfigurationException
     {
         onChangeRunType("load");
         process();
