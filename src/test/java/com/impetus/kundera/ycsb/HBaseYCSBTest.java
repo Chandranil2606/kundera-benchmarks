@@ -75,7 +75,7 @@ public class HBaseYCSBTest extends YCSBBaseTest
     @After
     public void tearDown() throws Exception
     {
-
+        onDestroy();
     }
 
     /**

@@ -76,7 +76,7 @@ public class MongoDBYCSBTest extends YCSBBaseTest
     @After
     public void tearDown() throws Exception
     {
-
+        onDestroy();
     }
 
     /**

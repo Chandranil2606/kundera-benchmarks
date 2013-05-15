@@ -80,7 +80,7 @@ public class CassandraYCSBTest extends YCSBBaseTest
     @After
     public void tearDown() throws Exception
     {
-
+        onDestroy();
     }
 
     /**

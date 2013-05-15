@@ -76,7 +76,7 @@ public class Neo4JYCSBTest extends YCSBBaseTest
     @After
     public void tearDown() throws Exception
     {
-
+        onDestroy();
     }
 
     /**

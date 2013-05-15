@@ -75,7 +75,7 @@ public class RedisYCSBTest extends YCSBBaseTest
     @After
     public void tearDown() throws Exception
     {
-        // Do nothing.
+        onDestroy();
     }
 
     /**

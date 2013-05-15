@@ -19,11 +19,8 @@ import java.io.IOException;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.lang.StringUtils;
+import org.junit.After;
 
-import scala.io.BytePickle.Def;
-
-import com.impetus.kundera.ycsb.runner.CassandraRunner;
 import com.impetus.kundera.ycsb.runner.YCSBRunner;
 
 /**
@@ -123,7 +120,16 @@ public abstract class YCSBBaseTest
             workLoadConfig.save();
             process();
         }
+        
+        config.setProperty("update", "true");
+        config.save();
     }
 	
     protected abstract void onChangeRunType(final String runType) throws ConfigurationException; 
+
+    protected void onDestroy() throws ConfigurationException
+    {
+            config.clearProperty("update");
+            config.save();
+    }
 }
