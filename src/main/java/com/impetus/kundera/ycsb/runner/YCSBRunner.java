@@ -174,7 +174,9 @@ public abstract class YCSBRunner
                     while((line=br.readLine()) != null)
                     {
                         logger.info(line);
+                        
                     }
+                    throw new RuntimeException("Error while processing");
                 }
                 timeTakenByClient.put(client, totalTime);
 
