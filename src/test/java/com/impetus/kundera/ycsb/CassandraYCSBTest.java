@@ -70,7 +70,7 @@ public class CassandraYCSBTest extends YCSBBaseTest
 
     void testUpdate() throws Exception
     {
-        onChangeRunType("t");
+        onChangeRunType(true);
         onUpdate();
     }
 

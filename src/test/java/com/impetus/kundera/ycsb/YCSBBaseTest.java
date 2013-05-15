@@ -121,8 +121,6 @@ public abstract class YCSBBaseTest
             process();
         }
         
-        config.setProperty("update", "true");
-        config.save();
     }
 	
     protected abstract void onChangeRunType(final String runType) throws ConfigurationException; 
@@ -132,4 +130,17 @@ public abstract class YCSBBaseTest
             config.clearProperty("update");
             config.save();
     }
+
+
+    /**
+     * @param runType
+     * @throws ConfigurationException
+     */
+    protected void onChangeRunType(boolean onUpdate) throws ConfigurationException
+    {
+        config.setProperty("update", "true");
+        onChangeRunType("t");
+    }
+
+
 }

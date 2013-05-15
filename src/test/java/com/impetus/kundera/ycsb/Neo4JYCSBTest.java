@@ -66,7 +66,7 @@ public class Neo4JYCSBTest extends YCSBBaseTest
 
     private void testUpdate() throws Exception
     {
-        onChangeRunType("t");
+        onChangeRunType(true);
         onUpdate();
     }
 
