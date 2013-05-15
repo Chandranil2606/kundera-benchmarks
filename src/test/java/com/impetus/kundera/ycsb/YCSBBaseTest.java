@@ -36,6 +36,7 @@ public abstract class YCSBBaseTest
     protected String workLoadPackage;
     protected YCSBRunner runner;
     protected String propsFileName;
+    protected String ycsbJarLocation;
 
     /**
      * @throws java.lang.Exception
@@ -45,6 +46,7 @@ public abstract class YCSBBaseTest
         propsFileName=System.getProperty("fileName");
 //        System.out.println(propsFileName);
         config = new PropertiesConfiguration(propsFileName);
+        ycsbJarLocation = config.getString("ycsbjar.location"); 
         workLoadPackage = config.getString("workload.dir","src/main/resources/workloads");
     }
 

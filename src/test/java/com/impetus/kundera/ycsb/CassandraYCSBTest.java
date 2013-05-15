@@ -47,53 +47,52 @@ public class CassandraYCSBTest extends YCSBBaseTest
         super.setUp();
     }
 
-    
     @Test
     public void onTest() throws Exception
     {
         testConcurrentWorkload();
         testRead();
         testUpdate();
-        
+
     }
-    
+
     void testConcurrentWorkload() throws IOException, ConfigurationException
     {
         onChangeRunType("load");
         process();
     }
-    
-    
+
     void testRead() throws Exception
     {
-    	onChangeRunType("t");
-    	onRead();
+        onChangeRunType("t");
+        onRead();
     }
-	
+
     void testUpdate() throws Exception
     {
-    	onChangeRunType("t");
-    	onUpdate();
+        onChangeRunType("t");
+        onUpdate();
     }
-	
+
     /**
      * @throws java.lang.Exception
      */
     @After
     public void tearDown() throws Exception
     {
-        
-    }
 
+    }
 
     /**
      * @param runType
      * @throws ConfigurationException
      */
-    protected void onChangeRunType(final String runType) throws ConfigurationException {
-		config.setProperty("run.type",runType);
-    	config.save();
+    protected void onChangeRunType(final String runType) throws ConfigurationException
+    {
+        config.setProperty("run.type", runType);
+        config.setProperty("ycsbjar.location", ycsbJarLocation);
+        config.save();
         runner = new CassandraRunner(propsFileName, config);
-	}
+    }
 
 }

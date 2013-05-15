@@ -28,7 +28,7 @@ import com.impetus.kundera.ycsb.runner.RedisRunner;
  * Redis Cloud YCSB benchmark.
  * 
  * @author vivek.mishra
- *
+ * 
  */
 public class RedisYCSBTest extends YCSBBaseTest
 {
@@ -43,7 +43,6 @@ public class RedisYCSBTest extends YCSBBaseTest
         super.setUp();
     }
 
-    
     @Test
     public void onTest() throws Exception
     {
@@ -57,20 +56,19 @@ public class RedisYCSBTest extends YCSBBaseTest
         onChangeRunType("load");
         process();
     }
-    
-    
+
     private void testRead() throws Exception
     {
-    	onChangeRunType("t");
-    	onRead();
+        onChangeRunType("t");
+        onRead();
     }
-	
+
     private void testUpdate() throws Exception
     {
-    	onChangeRunType("t");
-    	onUpdate();
+        onChangeRunType("t");
+        onUpdate();
     }
-	
+
     /**
      * @throws java.lang.Exception
      */
@@ -84,9 +82,11 @@ public class RedisYCSBTest extends YCSBBaseTest
      * @param runType
      * @throws ConfigurationException
      */
-    protected void onChangeRunType(final String runType) throws ConfigurationException {
-		config.setProperty("run.type",runType);
-    	config.save();
+    protected void onChangeRunType(final String runType) throws ConfigurationException
+    {
+        config.setProperty("run.type", runType);
+        config.setProperty("ycsbjar.location", ycsbJarLocation);
+        config.save();
         runner = new RedisRunner(propsFileName, config);
-	}
+    }
 }

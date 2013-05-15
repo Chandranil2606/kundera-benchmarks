@@ -28,7 +28,7 @@ import com.impetus.kundera.ycsb.runner.MongoRunner;
  * MongoDB YCSB Kundera benchmarking.
  * 
  * @author vivek.mishra
- *
+ * 
  */
 public class MongoDBYCSBTest extends YCSBBaseTest
 {
@@ -57,37 +57,38 @@ public class MongoDBYCSBTest extends YCSBBaseTest
         onChangeRunType("load");
         process();
     }
-    
-    
+
     private void testRead() throws Exception
     {
-    	onChangeRunType("t");
-    	onRead();
+        onChangeRunType("t");
+        onRead();
     }
-	
+
     private void testUpdate() throws Exception
     {
-    	onChangeRunType("t");
-    	onUpdate();
+        onChangeRunType("t");
+        onUpdate();
     }
-	
+
     /**
      * @throws java.lang.Exception
      */
     @After
     public void tearDown() throws Exception
     {
-        
+
     }
 
     /**
      * @param runType
      * @throws ConfigurationException
      */
-    protected void onChangeRunType(final String runType) throws ConfigurationException {
-		config.setProperty("run.type",runType);
-    	config.save();
+    protected void onChangeRunType(final String runType) throws ConfigurationException
+    {
+        config.setProperty("run.type", runType);
+        config.setProperty("ycsbjar.location", ycsbJarLocation);
+        config.save();
         runner = new MongoRunner(propsFileName, config);
-	}
+    }
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package com.impetus.kundera.ycsb;
+
 import java.io.IOException;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -23,12 +24,11 @@ import org.junit.Test;
 
 import com.impetus.kundera.ycsb.runner.Neo4jRunner;
 
-
 /**
  * Neo4J YCSB Kundera benchmarking.
  * 
  * @author vivek.mishra
- *
+ * 
  */
 public class Neo4JYCSBTest extends YCSBBaseTest
 {
@@ -57,37 +57,38 @@ public class Neo4JYCSBTest extends YCSBBaseTest
         onChangeRunType("load");
         process();
     }
-    
-    
+
     private void testRead() throws Exception
     {
-    	onChangeRunType("t");
-    	onRead();
+        onChangeRunType("t");
+        onRead();
     }
-	
+
     private void testUpdate() throws Exception
     {
-    	onChangeRunType("t");
-    	onUpdate();
+        onChangeRunType("t");
+        onUpdate();
     }
-	
+
     /**
      * @throws java.lang.Exception
      */
     @After
     public void tearDown() throws Exception
     {
-        
+
     }
 
     /**
      * @param runType
      * @throws ConfigurationException
      */
-    protected void onChangeRunType(final String runType) throws ConfigurationException {
-		config.setProperty("run.type",runType);
-    	config.save();
+    protected void onChangeRunType(final String runType) throws ConfigurationException
+    {
+        config.setProperty("run.type", runType);
+        config.setProperty("ycsbjar.location", ycsbJarLocation);
+        config.save();
         runner = new Neo4jRunner(propsFileName, config);
-	}
+    }
 
 }
