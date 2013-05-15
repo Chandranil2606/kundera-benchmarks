@@ -206,7 +206,7 @@ public abstract class YCSBRunner
         command.append(clientjarlocation);
         command.append(":");
         command.append(ycsbJarLocation);
-        command.append("* com.yahoo.ycsb.Client -db ");
+        command.append(" com.yahoo.ycsb.Client -db ");
         command.append(clazz);
         command.append(" -s -P ");
         command.append(workLoad);
