@@ -113,6 +113,7 @@ public abstract class YCSBRunner
                 long noOfOperations = 0;
 
                 Process process = runtime.exec(runCommand);
+                process.getErrorStream();
                 InputStream is = process.getInputStream();
                 InputStreamReader isr = new InputStreamReader(is);
                 BufferedReader br = new BufferedReader(isr);
@@ -120,8 +121,10 @@ public abstract class YCSBRunner
                 BigDecimal avgLatency=null;
                 BigDecimal throughput=null;
                 
+                boolean processed = false;
                 while ((line = br.readLine()) != null)
                 {
+                    processed = true;
                     if (line.contains("RunTime"))
                     {
                         totalTime = Double.parseDouble(line.substring(line.lastIndexOf(", ") + 2));
@@ -160,6 +163,17 @@ public abstract class YCSBRunner
 //                    }
                 }
 
+                if(!processed)
+                {
+                    is = process.getErrorStream();
+                    isr = new InputStreamReader(is);
+                    br = new BufferedReader(isr);
+                    line = null;
+                    while((line=br.readLine()) != null)
+                    {
+                        logger.info(line);
+                    }
+                }
                 timeTakenByClient.put(client, totalTime);
 
                 PerformanceNoInfo info = new PerformanceNoInfo(id, releaseNo, client.substring(client.lastIndexOf(".")+1), runType, noOfThreads,
