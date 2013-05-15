@@ -80,7 +80,7 @@ public class RedisRunner extends YCSBRunner
 
         if (kunderaRedisToJedisDelta > 10.00)
         {
-             MailUtils.sendMail(delta, runType, "redis");
+             MailUtils.sendMail(delta, isUpdate ? "update" : runType, "redis");
         }
 
     }

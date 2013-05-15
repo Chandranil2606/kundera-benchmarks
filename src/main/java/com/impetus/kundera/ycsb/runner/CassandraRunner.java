@@ -117,7 +117,7 @@ public class CassandraRunner extends YCSBRunner
         if (/*(kunderaPelopsToHectorDelta > 10.00) ||*/ (kunderaPelopsToPelopsDelta > 10.00)
                 || (kunderaThriftToThriftDelta > 10.00))
         {
-            MailUtils.sendMail(delta, runType, "cassandra");
+            MailUtils.sendMail(delta, isUpdate ? "update" : runType, "cassandra");
         }
 
     }

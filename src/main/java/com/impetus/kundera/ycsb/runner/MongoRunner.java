@@ -84,7 +84,7 @@ public class MongoRunner extends YCSBRunner
 
         if (kunderaMongoToNativeDelta > 8.00)
         {
-            MailUtils.sendMail(delta, runType, "mongoDb");
+            MailUtils.sendMail(delta, isUpdate ? "update" : runType, "mongoDb");
         }
 
     }

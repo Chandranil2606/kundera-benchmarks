@@ -79,7 +79,7 @@ public class HBaseRunner extends YCSBRunner
 
         if (kunderaHBaseToNativeDelta > 8.00)
         {
-            MailUtils.sendMail(delta, runType, "hbase");
+            MailUtils.sendMail(delta, isUpdate ? "update" : runType, "hbase");
         }
     }
 

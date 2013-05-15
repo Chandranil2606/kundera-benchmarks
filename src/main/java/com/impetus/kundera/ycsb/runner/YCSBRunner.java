@@ -68,6 +68,7 @@ public abstract class YCSBRunner
     
     protected String password;
 
+    protected boolean isUpdate;
     protected Map<String, Double> timeTakenByClient = new HashMap<String, Double>();
 
     private static Logger logger = Logger.getLogger(YCSBRunner.class);
@@ -85,6 +86,7 @@ public abstract class YCSBRunner
         port = config.getInt("port");
         password= config.getString("password");
         clients= config.getStringArray("clients");
+        isUpdate = config.getBoolean("update");
     }
 
     public void run(final String workLoad, final int threadCount) throws IOException

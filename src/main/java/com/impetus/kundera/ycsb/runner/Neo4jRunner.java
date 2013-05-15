@@ -65,7 +65,7 @@ public class Neo4jRunner extends YCSBRunner
 
         if (kunderaNativeToNativeDelta > 8.00)
         {
-            MailUtils.sendMail(delta, runType, "neo4j");
+            MailUtils.sendMail(delta, isUpdate ? "update" : runType, "neo4j");
         }
 
     }
