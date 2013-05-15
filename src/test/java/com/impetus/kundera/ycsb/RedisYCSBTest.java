@@ -43,23 +43,29 @@ public class RedisYCSBTest extends YCSBBaseTest
         super.setUp();
     }
 
+    
     @Test
-    public void testConcurrentWorkload() throws IOException, ConfigurationException
+    public void onTest() throws Exception
+    {
+        testConcurrentWorkload();
+        testRead();
+        testUpdate();
+    }
+
+    private void testConcurrentWorkload() throws IOException, ConfigurationException
     {
         onChangeRunType("load");
         process();
     }
     
     
-    @Test
-    public void testRead() throws Exception
+    private void testRead() throws Exception
     {
     	onChangeRunType("t");
     	onRead();
     }
 	
-    @Test
-    public void testUpdate() throws Exception
+    private void testUpdate() throws Exception
     {
     	onChangeRunType("t");
     	onUpdate();
