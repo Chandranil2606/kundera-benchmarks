@@ -86,7 +86,10 @@ public abstract class YCSBRunner
         port = config.getInt("port");
         password= config.getString("password");
         clients= config.getStringArray("clients");
-        isUpdate = config.getBoolean("update");
+        if(config.containsKey("update"))
+        {
+            isUpdate = config.getBoolean("update");
+        }
     }
 
     public void run(final String workLoad, final int threadCount) throws IOException
