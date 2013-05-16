@@ -3,13 +3,11 @@
  */
 package com.impetus.kundera.ycsb.runner;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.configuration.Configuration;
 
-import com.impetus.kundera.ycsb.utils.HBaseOperationUtils;
 import com.impetus.kundera.ycsb.utils.HibernateCRUDUtils;
 import com.impetus.kundera.ycsb.utils.MailUtils;
 
@@ -73,7 +71,7 @@ public class HBaseRunner extends YCSBRunner
     {
         Map<String, Double> delta = new HashMap<String, Double>();
 
-        double kunderaHBaseToNativeDelta = ((timeTakenByClient.get(clients[0]).doubleValue() - timeTakenByClient.get(clients[1]).doubleValue())
+        double kunderaHBaseToNativeDelta = ((timeTakenByClient.get(clients[1]).doubleValue() - timeTakenByClient.get(clients[0]).doubleValue())
                 / timeTakenByClient.get(clients[1]).doubleValue() * 100);
         delta.put("kunderaHBaseToNativeDelta", kunderaHBaseToNativeDelta);
 

@@ -104,9 +104,9 @@ public class CassandraRunner extends YCSBRunner
     protected void sendMail()
     {
         Map<String, Double> delta = new HashMap<String, Double>();
-        double kunderaPelopsToPelopsDelta = ((timeTakenByClient.get(clients[0]).doubleValue() - timeTakenByClient.get(clients[1]).doubleValue())
+        double kunderaPelopsToPelopsDelta = ((timeTakenByClient.get(clients[1]).doubleValue() - timeTakenByClient.get(clients[0]).doubleValue())
                 / timeTakenByClient.get(clients[1]).doubleValue() * 100);
-        double kunderaThriftToThriftDelta = ((timeTakenByClient.get(clients[2]).doubleValue() - timeTakenByClient.get(clients[3]).doubleValue())
+        double kunderaThriftToThriftDelta = ((timeTakenByClient.get(clients[3]).doubleValue() - timeTakenByClient.get(clients[2]).doubleValue())
                 / timeTakenByClient.get(clients[3]).doubleValue() * 100);
 //        double kunderaPelopsToHectorDelta = ((timeTakenByClient.get(clients[1]) - timeTakenByClient.get(clients[4]))
 //                / timeTakenByClient.get(clients[1]) * 100);
