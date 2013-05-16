@@ -69,7 +69,7 @@ public abstract class YCSBRunner
     protected String password;
 
     protected boolean isUpdate;
-    protected Map<String, Double> timeTakenByClient = new HashMap<String, Double>();
+    protected Map<String, BigDecimal> timeTakenByClient = new HashMap<String, BigDecimal>();
 
     private static Logger logger = Logger.getLogger(YCSBRunner.class);
 
@@ -178,7 +178,6 @@ public abstract class YCSBRunner
                     }
                     throw new RuntimeException("Error while processing");
                 }
-                timeTakenByClient.put(client, totalTime);
 
                 PerformanceNoInfo info = new PerformanceNoInfo(id, releaseNo, client.substring(client.lastIndexOf(".")+1), runType, noOfThreads,
                         noOfOperations, totalTime, runCounter);
@@ -193,6 +192,7 @@ public abstract class YCSBRunner
                     info.setThroughput(throughput.round(MathContext.DECIMAL32));
                 }
                 crudUtils.persistInfo(info);
+                timeTakenByClient.put(client, throughput);
                 
                 //Stop server
                 stopServer(runtime);

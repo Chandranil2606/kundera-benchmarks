@@ -17,7 +17,6 @@ package com.impetus.kundera.ycsb.utils;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;

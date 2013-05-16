@@ -16,6 +16,7 @@
 package com.impetus.kundera.ycsb.runner;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,11 +79,11 @@ public class MongoRunner extends YCSBRunner
     {
         Map<String, Double> delta = new HashMap<String, Double>();
 
-        double kunderaMongoToNativeDelta = ((timeTakenByClient.get(clients[0]) - timeTakenByClient.get(clients[1]))
-                / timeTakenByClient.get(clients[1]) * 100);
+        double kunderaMongoToNativeDelta = ((timeTakenByClient.get(clients[0]).doubleValue() - timeTakenByClient.get(clients[1]).doubleValue())
+                / timeTakenByClient.get(clients[1]).doubleValue() * 100);
         delta.put("kunderaMongoToNativeDelta", kunderaMongoToNativeDelta);
 
-        if (kunderaMongoToNativeDelta > 8.00)
+        if (kunderaMongoToNativeDelta > 8.0)
         {
             MailUtils.sendMail(delta, isUpdate ? "update" : runType, "mongoDb");
         }

@@ -73,8 +73,8 @@ public class HBaseRunner extends YCSBRunner
     {
         Map<String, Double> delta = new HashMap<String, Double>();
 
-        double kunderaHBaseToNativeDelta = ((timeTakenByClient.get(clients[0]) - timeTakenByClient.get(clients[1]))
-                / timeTakenByClient.get(clients[1]) * 100);
+        double kunderaHBaseToNativeDelta = ((timeTakenByClient.get(clients[0]).doubleValue() - timeTakenByClient.get(clients[1]).doubleValue())
+                / timeTakenByClient.get(clients[1]).doubleValue() * 100);
         delta.put("kunderaHBaseToNativeDelta", kunderaHBaseToNativeDelta);
 
         if (kunderaHBaseToNativeDelta > 8.00)
