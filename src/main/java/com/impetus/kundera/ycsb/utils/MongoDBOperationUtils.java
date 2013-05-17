@@ -65,7 +65,7 @@ public class MongoDBOperationUtils
     public void startMongoServer(Runtime runtime, String startMongoServerCommand) throws IOException, InterruptedException
     {
         logger.info("Starting hbase server at ...........");
-        runtime.exec(startMongoServerCommand + "/mongod");
+        runtime.exec(startMongoServerCommand);
         logger.info("started..............");
     }
 
