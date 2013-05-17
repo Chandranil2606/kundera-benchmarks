@@ -19,7 +19,6 @@ import java.io.IOException;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.junit.After;
 
 import com.impetus.kundera.ycsb.runner.YCSBRunner;
 

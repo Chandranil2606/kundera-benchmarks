@@ -50,6 +50,20 @@ public class RedisRunner extends YCSBRunner
     @Override
     protected void startServer(boolean performCleanup,Runtime runTime)
     {
+        try
+        {
+            operationUtils.startRedisServer(runTime, redisServerLocation);
+        }
+        catch (IOException e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        catch (InterruptedException e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 		if (performCleanup) {
 			try {
 				operationUtils.cleanRedisDatabase(host, port, password);
@@ -66,7 +80,20 @@ public class RedisRunner extends YCSBRunner
     @Override
     protected void stopServer(Runtime runTime)
     {
-    	// Do nothing.
+    	try
+        {
+            operationUtils.stopRedisServer(runTime);
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (InterruptedException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override

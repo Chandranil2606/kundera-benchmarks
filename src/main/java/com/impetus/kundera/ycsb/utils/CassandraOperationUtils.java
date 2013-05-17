@@ -48,7 +48,7 @@ import common.Logger;
  */
 public class CassandraOperationUtils
 {
-   
+
     private Cassandra.Client cassandra_client;
 
     private static Logger logger = Logger.getLogger(CassandraOperationUtils.class);
@@ -67,24 +67,24 @@ public class CassandraOperationUtils
      *             Signals that an I/O exception has occurred.
      * @throws InterruptedException
      */
-    public void startCassandraServer(Boolean performDeleteData, Runtime runtime, String cassandraServerLocation)
+    public void startCassandraServer(Boolean performDeleteData, Runtime runtime, String startCassandraServerCommand)
             throws IOException, InterruptedException
     {
-        logger.info("Starting casssandra server at " + cassandraServerLocation + "...........");
+        logger.info("Starting casssandra server ...........");
         this.runTime = runtime;
         while (checkOnProcess(runtime))
         {
             stopCassandraServer(performDeleteData, runtime);
             TimeUnit.SECONDS.sleep(2);
         }
-        
+
         if (performDeleteData)
         {
             runtime.exec("rm -rf /var/lib/cassandra/*").waitFor();
             runtime.exec("mkdir /var/lib/cassandra/").waitFor();
             runtime.exec("chmod 777 -R /var/lib/cassandra/").waitFor();
         }
-        runtime.exec(cassandraServerLocation).waitFor();
+        runtime.exec(startCassandraServerCommand).waitFor();
         TimeUnit.SECONDS.sleep(5);
         while (!checkOnProcess(runtime))
         {
@@ -150,14 +150,14 @@ public class CassandraOperationUtils
             initiateClient(host, this.runTime, port);
         }
         KsDef ksDef = null;
-        
+
         try
         {
             ksDef = cassandra_client.describe_keyspace(keyspace);
-            if(performCleanup)
+            if (performCleanup)
             {
-            	dropKeyspace(keyspace, host, port);
-            	createKeyspaceAndColumnFamily(keyspace, columnFamily, ksDef);
+                dropKeyspace(keyspace, host, port);
+                createKeyspaceAndColumnFamily(keyspace, columnFamily, ksDef);
             }
         }
         catch (NotFoundException e)
@@ -192,7 +192,7 @@ public class CassandraOperationUtils
         cfDef.setKey_validation_class("UTF8Type");
         cfDef.setComparator_type("UTF8Type");
 
-        CfDef cfDef1 = new CfDef(keyspace, "kundera"+columnFamily);
+        CfDef cfDef1 = new CfDef(keyspace, "kundera" + columnFamily);
         cfDef1.setDefault_validation_class("UTF8Type");
         cfDef1.setKey_validation_class("UTF8Type");
         cfDef1.setComparator_type("UTF8Type");
@@ -261,7 +261,7 @@ public class CassandraOperationUtils
             if (!file.delete())
             {
                 // Failed to delete file
-//                 logger.info("Failed to delete " + file);
+                // logger.info("Failed to delete " + file);
             }
         }
     }
@@ -314,8 +314,8 @@ public class CassandraOperationUtils
                 logger.error(e);
             }
             TimeUnit.SECONDS.sleep(3);
-	    return;
+            return;
         }
     }
- 
+
 }

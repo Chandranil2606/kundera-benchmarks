@@ -3,11 +3,13 @@
  */
 package com.impetus.kundera.ycsb.runner;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.configuration.Configuration;
 
+import com.impetus.kundera.ycsb.utils.HBaseOperationUtils;
 import com.impetus.kundera.ycsb.utils.HibernateCRUDUtils;
 import com.impetus.kundera.ycsb.utils.MailUtils;
 
@@ -18,9 +20,18 @@ import com.impetus.kundera.ycsb.utils.MailUtils;
 public class HBaseRunner extends YCSBRunner
 {
 
+    private HBaseOperationUtils utils = new HBaseOperationUtils();
+
+    private String startHBaseServerCommand;
+
+    private String stopHBaseServerCommand;
+
     public HBaseRunner(String propertyFile, Configuration config)
     {
         super(propertyFile, config);
+        String server = config.getString("server.location");
+        this.startHBaseServerCommand = server+"/"+"start-hbase.sh";
+        this.stopHBaseServerCommand = server+"/"+"stop-hbase.sh";
         crudUtils = new HibernateCRUDUtils();
     }
 
@@ -33,19 +44,28 @@ public class HBaseRunner extends YCSBRunner
     @Override
     protected void startServer(boolean performDelete, Runtime runTime)
     {
-        if(performDelete)
+        if (performDelete)
         {/*
-            HBaseOperationUtils utils = new HBaseOperationUtils();
+          * HBaseOperationUtils utils = new HBaseOperationUtils(); try {
+          * utils.deleteTable(columnFamilyOrTable); } catch (IOException e) {
+          * throw new RuntimeException("Error while deleting data,Caused by:" ,
+          * e); }
+          */
             try
             {
-                utils.deleteTable(columnFamilyOrTable);
+                utils.startHBaseServer(runTime, startHBaseServerCommand);
             }
             catch (IOException e)
             {
-                throw new RuntimeException("Error while deleting data,Caused by:" , e);
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-            
-        */}
+            catch (InterruptedException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
 
     }
 
@@ -58,7 +78,20 @@ public class HBaseRunner extends YCSBRunner
     @Override
     protected void stopServer(Runtime runTime)
     {
-
+        try
+        {
+            utils.stopHBaseServer(stopHBaseServerCommand, runTime);
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (InterruptedException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -71,7 +104,8 @@ public class HBaseRunner extends YCSBRunner
     {
         Map<String, Double> delta = new HashMap<String, Double>();
 
-        double kunderaHBaseToNativeDelta = ((timeTakenByClient.get(clients[1]).doubleValue() - timeTakenByClient.get(clients[0]).doubleValue())
+        double kunderaHBaseToNativeDelta = ((timeTakenByClient.get(clients[1]).doubleValue() - timeTakenByClient.get(
+                clients[0]).doubleValue())
                 / timeTakenByClient.get(clients[1]).doubleValue() * 100);
         delta.put("kunderaHBaseToNativeDelta", kunderaHBaseToNativeDelta);
 

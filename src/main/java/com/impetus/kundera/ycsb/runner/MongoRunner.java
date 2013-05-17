@@ -16,17 +16,14 @@
 package com.impetus.kundera.ycsb.runner;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.configuration.Configuration;
 
-import com.impetus.kundera.ycsb.utils.CassandraOperationUtils;
 import com.impetus.kundera.ycsb.utils.HibernateCRUDUtils;
 import com.impetus.kundera.ycsb.utils.MailUtils;
 import com.impetus.kundera.ycsb.utils.MongoDBOperationUtils;
-
 import common.Logger;
 
 /**
@@ -37,49 +34,82 @@ public class MongoRunner extends YCSBRunner
 {
     private static MongoDBOperationUtils operationUtils;
 
-    private String mongoServerLocation;
-    
     private String url;
+
+    private String startMongoServerCommand;
 
     private static Logger logger = Logger.getLogger(CassandraRunner.class);
 
     public MongoRunner(final String propertyFile, final Configuration config)
     {
-        super(propertyFile,config);
-        this.mongoServerLocation = config.getString("server.location");
+        super(propertyFile, config);
+        this.startMongoServerCommand = config.getString("server.location");
         operationUtils = new MongoDBOperationUtils();
         crudUtils = new HibernateCRUDUtils();
-        url = "mongodb://"+host+":"+port;
+        url = "mongodb://" + host + ":" + port;
     }
 
-   
     @Override
     protected void startServer(boolean performCleanUp, Runtime runTime)
- {
-		if (performCleanUp) {
-			try {
-				operationUtils.cleanDatabase(url, schema);
-			} catch (IOException e) {
-				logger.error(e);
-				throw new RuntimeException(e);
-			} catch (InterruptedException e) {
-				logger.error(e);
-				throw new RuntimeException(e);
-			}
-		}
-	}
+    {
+        try
+        {
+            operationUtils.startMongoServer(runTime, startMongoServerCommand);
+        }
+        catch (IOException e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        catch (InterruptedException e1)
+        {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        if (performCleanUp)
+        {
+            try
+            {
+                operationUtils.cleanDatabase(url, schema);
+            }
+            catch (IOException e)
+            {
+                logger.error(e);
+                throw new RuntimeException(e);
+            }
+            catch (InterruptedException e)
+            {
+                logger.error(e);
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     @Override
     protected void stopServer(Runtime runTime)
     {
-        // Do nothing.
+        try
+        {
+            operationUtils.stopMongoServer(runTime);
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (InterruptedException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     protected void sendMail()
     {
         Map<String, Double> delta = new HashMap<String, Double>();
 
-        double kunderaMongoToNativeDelta = ((timeTakenByClient.get(clients[1]).doubleValue() - timeTakenByClient.get(clients[0]).doubleValue())
+        double kunderaMongoToNativeDelta = ((timeTakenByClient.get(clients[1]).doubleValue() - timeTakenByClient.get(
+                clients[0]).doubleValue())
                 / timeTakenByClient.get(clients[1]).doubleValue() * 100);
         delta.put("kunderaMongoToNativeDelta", kunderaMongoToNativeDelta);
 
