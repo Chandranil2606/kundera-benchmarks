@@ -50,7 +50,7 @@ public class MongoRunner extends YCSBRunner
     }
 
     @Override
-    protected void startServer(boolean performCleanUp, Runtime runTime)
+    public void startServer(boolean performCleanUp, Runtime runTime)
     {
         try
         {
@@ -86,7 +86,7 @@ public class MongoRunner extends YCSBRunner
     }
 
     @Override
-    protected void stopServer(Runtime runTime)
+    public void stopServer(Runtime runTime)
     {
         try
         {

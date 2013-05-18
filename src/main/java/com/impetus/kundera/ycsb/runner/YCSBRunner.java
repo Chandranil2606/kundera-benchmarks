@@ -195,7 +195,7 @@ public abstract class YCSBRunner
                 timeTakenByClient.put(client, throughput);
                 
                 //Stop server
-                stopServer(runtime);
+//                stopServer(runtime);
             }
         }
         
@@ -225,9 +225,9 @@ public abstract class YCSBRunner
         return command.toString();
     }
 
-    protected abstract void startServer(boolean performDelete, Runtime runTime);
+    public abstract void startServer(boolean performDelete, Runtime runTime);
     
-    protected abstract void stopServer(Runtime runTime);
+    public abstract void stopServer(Runtime runTime);
     protected abstract void sendMail();
 
     /**

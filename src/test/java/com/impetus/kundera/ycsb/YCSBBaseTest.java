@@ -128,6 +128,8 @@ public abstract class YCSBBaseTest
     {
             config.clearProperty("update");
             config.save();
+            Runtime runtime = Runtime.getRuntime();
+            runner.stopServer(runtime);
     }
 
 
