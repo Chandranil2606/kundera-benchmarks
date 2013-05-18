@@ -64,9 +64,9 @@ public class RedisRunner extends YCSBRunner
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-		if (performCleanup) {
+		/*if (performCleanup) {
 			try {
-				operationUtils.cleanRedisDatabase(host, port, password);
+//				operationUtils.cleanRedisDatabase(host, port, password);
 			} catch (IOException e) {
 				logger.error(e);
 				throw new RuntimeException(e);
@@ -74,7 +74,7 @@ public class RedisRunner extends YCSBRunner
 				logger.error(e);
 				throw new RuntimeException(e);
 			}
-		}
+		}*/
     }
 
     @Override
