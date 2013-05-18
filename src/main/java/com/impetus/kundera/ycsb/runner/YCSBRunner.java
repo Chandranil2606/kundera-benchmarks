@@ -106,7 +106,7 @@ public abstract class YCSBRunner
             {
                 Runtime runtime = Runtime.getRuntime();
                 //start server
-                startServer(performDelete(counter),runtime);
+//                startServer(performDelete(counter),runtime);
                 counter++;
                 String runCommand = getCommandString(client,workLoad);
 

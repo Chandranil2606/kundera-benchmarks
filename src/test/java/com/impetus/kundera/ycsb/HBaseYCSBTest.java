@@ -88,6 +88,9 @@ public class HBaseYCSBTest extends YCSBBaseTest
         config.setProperty("ycsbjar.location", ycsbJarLocation);
         config.save();
         runner = new HBaseRunner(propsFileName, config);
+        Runtime runtime = Runtime.getRuntime();
+        runner.startServer(runType.equals("load"), runtime);
+
     }
 
 }

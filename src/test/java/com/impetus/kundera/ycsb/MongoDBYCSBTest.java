@@ -89,6 +89,8 @@ public class MongoDBYCSBTest extends YCSBBaseTest
         config.setProperty("ycsbjar.location", ycsbJarLocation);
         config.save();
         runner = new MongoRunner(propsFileName, config);
+        Runtime runtime = Runtime.getRuntime();
+        runner.startServer(runType.equals("load"), runtime);
     }
 
 }

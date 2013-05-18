@@ -93,6 +93,9 @@ public class CassandraYCSBTest extends YCSBBaseTest
         config.setProperty("ycsbjar.location", ycsbJarLocation);
         config.save();
         runner = new CassandraRunner(propsFileName, config);
+        Runtime runtime = Runtime.getRuntime();
+        runner.startServer(runType.equals("load"), runtime);
+
     }
 
 }
