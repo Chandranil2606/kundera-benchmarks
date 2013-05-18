@@ -48,7 +48,7 @@ public class RedisRunner extends YCSBRunner
     }
 
     @Override
-    protected void startServer(boolean performCleanup,Runtime runTime)
+    public void startServer(boolean performCleanup,Runtime runTime)
     {
         try
         {
@@ -78,7 +78,7 @@ public class RedisRunner extends YCSBRunner
     }
 
     @Override
-    protected void stopServer(Runtime runTime)
+    public void stopServer(Runtime runTime)
     {
     	try
         {

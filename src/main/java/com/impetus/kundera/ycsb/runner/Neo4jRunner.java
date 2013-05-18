@@ -41,13 +41,13 @@ public class Neo4jRunner extends YCSBRunner
     }
 
     @Override
-    protected void startServer(boolean performCleanup,Runtime runTime)
+    public void startServer(boolean performCleanup,Runtime runTime)
     {
         // do nothing.
     }
 
     @Override
-    protected void stopServer(Runtime runTime)
+    public void stopServer(Runtime runTime)
     {
         // Do nothing.
     }

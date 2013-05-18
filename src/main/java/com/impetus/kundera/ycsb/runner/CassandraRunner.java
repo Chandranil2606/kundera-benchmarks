@@ -47,7 +47,7 @@ public class CassandraRunner extends YCSBRunner
     }
 
     @Override
-    protected void startServer(boolean performDelete, Runtime runTime)
+    public void startServer(boolean performDelete, Runtime runTime)
     {
         try
         {
@@ -80,7 +80,7 @@ public class CassandraRunner extends YCSBRunner
     }
 
     @Override
-    protected void stopServer(Runtime runTime)
+    public void stopServer(Runtime runTime)
     {
     	// No need to run with "t" option.
     	

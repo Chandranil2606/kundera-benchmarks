@@ -42,7 +42,7 @@ public class HBaseRunner extends YCSBRunner
      * java.lang.Runtime)
      */
     @Override
-    protected void startServer(boolean performDelete, Runtime runTime)
+    public void startServer(boolean performDelete, Runtime runTime)
     {
         if (performDelete)
         {/*
@@ -76,7 +76,7 @@ public class HBaseRunner extends YCSBRunner
      * com.impetus.kundera.ycsb.runner.YCSBRunner#stopServer(java.lang.Runtime)
      */
     @Override
-    protected void stopServer(Runtime runTime)
+    public void stopServer(Runtime runTime)
     {
         try
         {
