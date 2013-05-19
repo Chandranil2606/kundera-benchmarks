@@ -45,11 +45,11 @@ public class RedisYCSBTest extends YCSBBaseTest
 
     @Test
     public void onTest() throws Exception
-    {
+    {/*
         testConcurrentWorkload();
         testRead();
 //        testUpdate();
-    }
+    */}
 
     private void testConcurrentWorkload() throws IOException, ConfigurationException
     {
