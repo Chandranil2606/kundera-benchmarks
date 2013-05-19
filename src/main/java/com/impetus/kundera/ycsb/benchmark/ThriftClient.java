@@ -105,7 +105,7 @@ public class ThriftClient extends DB
 
     Cassandra.Client client;
 
-    boolean _debug = true;
+    boolean _debug = false;
 
     String _table = "";
 
@@ -133,7 +133,7 @@ public class ThriftClient extends DB
      */
     public void init() throws DBException
     {
-        System.out.println("**************************" + column_family);
+//        System.out.println("**************************" + column_family);
         try
         {
             String hosts = getProperties().getProperty("hosts");
@@ -168,7 +168,7 @@ public class ThriftClient extends DB
 
             Exception connectexception = null;
 
-            System.out.println("Initiating connection");
+//            System.out.println("Initiating connection");
             if (tr == null || client == null)
             {
 
@@ -176,7 +176,7 @@ public class ThriftClient extends DB
                 {
                     tr = new TFramedTransport(new TSocket(myhost, 9160));
                     TProtocol proto = new TBinaryProtocol(tr);
-                    System.out.println("creating connection::");
+//                    System.out.println("creating connection::");
                     client = new Cassandra.Client(proto);
                     try
                     {
@@ -495,7 +495,7 @@ public class ThriftClient extends DB
          * }
          */if (_debug)
         {
-            System.out.println("Inserting key: " + key);
+//            System.out.println("Inserting key: " + key);
         }
 
         try

@@ -60,11 +60,11 @@ public class CassandraRunner extends YCSBRunner
             	operationUtils.dropKeyspace(schema,host,port);
             }
          
-            if (!currentClient.equalsIgnoreCase("com.impetus.kundera.ycsb.benchmark.HectorClient"))
-            {
+            /*if (!currentClient.equalsIgnoreCase("com.impetus.kundera.ycsb.benchmark.HectorClient"))
+            {*/
             	// When running with "t" option . no need to load up these.
                 operationUtils.createKeysapce(schema, performDelete, host, columnFamilyOrTable,port);
-            }
+//            }
         }
         catch (IOException e)
         {
@@ -102,23 +102,37 @@ public class CassandraRunner extends YCSBRunner
     }
 
     protected void sendMail()
-    {
+    {/*
         Map<String, Double> delta = new HashMap<String, Double>();
-        double kunderaPelopsToPelopsDelta = ((timeTakenByClient.get(clients[1]).doubleValue() - timeTakenByClient.get(clients[0]).doubleValue())
-                / timeTakenByClient.get(clients[1]).doubleValue() * 100);
-        double kunderaThriftToThriftDelta = ((timeTakenByClient.get(clients[3]).doubleValue() - timeTakenByClient.get(clients[2]).doubleValue())
-                / timeTakenByClient.get(clients[3]).doubleValue() * 100);
-//        double kunderaPelopsToHectorDelta = ((timeTakenByClient.get(clients[1]) - timeTakenByClient.get(clients[4]))
-//                / timeTakenByClient.get(clients[1]) * 100);
+        double kunderaPelopsToPelopsDelta = 0.0;
+        double kunderaThriftToThriftDelta = 0.0;
+        if (timeTakenByClient.get(clients[1]) != null && timeTakenByClient.get(clients[0]) != null)
+        {
+
+            kunderaPelopsToPelopsDelta = ((timeTakenByClient.get(clients[1]).doubleValue() - timeTakenByClient.get(
+                    clients[0]).doubleValue())
+                    / timeTakenByClient.get(clients[1]).doubleValue() * 100);
+        }
+
+        if (clients.length ==3 && timeTakenByClient.get(clients[2]) != null && timeTakenByClient.get(clients[3]) != null)
+        {
+            kunderaThriftToThriftDelta = ((timeTakenByClient.get(clients[3]).doubleValue() - timeTakenByClient.get(
+                    clients[2]).doubleValue())
+                    / timeTakenByClient.get(clients[3]).doubleValue() * 100);
+        }
+        // double kunderaPelopsToHectorDelta =
+        // ((timeTakenByClient.get(clients[1]) -
+        // timeTakenByClient.get(clients[4]))
+        // / timeTakenByClient.get(clients[1]) * 100);
         delta.put("kunderaPelopsToPelopsDelta", kunderaPelopsToPelopsDelta);
         delta.put("kunderaThriftToThriftDelta", kunderaThriftToThriftDelta);
-//        delta.put("kunderaPelopsToHectorDelta", kunderaPelopsToHectorDelta);
+        // delta.put("kunderaPelopsToHectorDelta", kunderaPelopsToHectorDelta);
 
-        if (/*(kunderaPelopsToHectorDelta > 10.00) ||*/ (kunderaPelopsToPelopsDelta > 10.00)
+        if ( (kunderaPelopsToHectorDelta > 10.00) || (kunderaPelopsToPelopsDelta > 10.00)
                 || (kunderaThriftToThriftDelta > 10.00))
         {
             MailUtils.sendMail(delta, isUpdate ? "update" : runType, "cassandra");
         }
 
-    }
+    */}
 }

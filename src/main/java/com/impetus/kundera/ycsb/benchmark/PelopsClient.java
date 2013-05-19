@@ -99,8 +99,9 @@ public class PelopsClient extends DB {
 					"Required property \"hosts\" missing for CassandraClient");
 		}
 
-		column_family = getProperties().getProperty(COLUMN_FAMILY_PROPERTY,
-				COLUMN_FAMILY_PROPERTY_DEFAULT);
+               column_family = "pelopsuser";
+	//	column_family = getProperties().getProperty(COLUMN_FAMILY_PROPERTY,
+	//			COLUMN_FAMILY_PROPERTY_DEFAULT);
 
 		readConsistencyLevel = ConsistencyLevel.valueOf(getProperties()
 				.getProperty(READ_CONSISTENCY_LEVEL_PROPERTY,

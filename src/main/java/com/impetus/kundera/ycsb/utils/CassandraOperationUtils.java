@@ -187,18 +187,32 @@ public class CassandraOperationUtils
     {
 
         List<CfDef> cfDefs = new ArrayList<CfDef>();
-        CfDef cfDef = new CfDef(keyspace, columnFamily);
+        CfDef cfDef = new CfDef(keyspace, columnFamily); // thrift client.
         cfDef.setDefault_validation_class("UTF8Type");
         cfDef.setKey_validation_class("UTF8Type");
         cfDef.setComparator_type("UTF8Type");
 
-        CfDef cfDef1 = new CfDef(keyspace, "kundera" + columnFamily);
+        CfDef cfDef1 = new CfDef(keyspace, "kthrift" + columnFamily); // kundera thrift client.
         cfDef1.setDefault_validation_class("UTF8Type");
         cfDef1.setKey_validation_class("UTF8Type");
         cfDef1.setComparator_type("UTF8Type");
 
+
+        CfDef cfDef2 = new CfDef(keyspace, "kpelops" + columnFamily); // kundera pelops client.
+        cfDef2.setDefault_validation_class("UTF8Type");
+        cfDef2.setKey_validation_class("UTF8Type");
+        cfDef2.setComparator_type("UTF8Type");
+
+
+        CfDef cfDef3 = new CfDef(keyspace, "pelops" + columnFamily); // pelops client.
+        cfDef3.setDefault_validation_class("UTF8Type");
+        cfDef3.setKey_validation_class("UTF8Type");
+        cfDef3.setComparator_type("UTF8Type");
+
         cfDefs.add(cfDef);
-        cfDefs.add(cfDef1); // Add a column family for Kundera.
+        cfDefs.add(cfDef1); 
+        cfDefs.add(cfDef2);
+        cfDefs.add(cfDef3); 
         ksDef = new KsDef(keyspace, "org.apache.cassandra.locator.SimpleStrategy", cfDefs);
         Map<String, String> strategy_options = new HashMap<String, String>();
         strategy_options.put("replication_factor", "1");
@@ -235,7 +249,7 @@ public class CassandraOperationUtils
         }
         catch (InvalidRequestException e)
         {
-            logger.error(e);
+            // logger.error(e);
         }
         catch (SchemaDisagreementException e)
         {

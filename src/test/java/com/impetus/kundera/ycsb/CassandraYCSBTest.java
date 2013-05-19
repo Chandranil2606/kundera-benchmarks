@@ -50,7 +50,7 @@ public class CassandraYCSBTest extends YCSBBaseTest
     @Test
     public void onTest() throws Exception
     {
-        testConcurrentWorkload();
+       testConcurrentWorkload();
         testRead();
 //        testUpdate();
 
