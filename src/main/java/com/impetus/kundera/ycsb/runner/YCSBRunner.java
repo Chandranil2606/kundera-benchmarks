@@ -132,7 +132,7 @@ public abstract class YCSBRunner
                         totalTime = Double.parseDouble(line.substring(line.lastIndexOf(", ") + 2));
                         logger.info("Total time taken " + totalTime);
                     }
-                    if (line.contains("Operations") && !line.contains(".") && noOfOperations == 0)
+                    if (line.contains("Operations") && noOfOperations == 0)
                     {
                         noOfOperations = Long.parseLong(line.substring(line.lastIndexOf(", ") + 2));
                         logger.info("Total no of oprations " + noOfOperations);
@@ -205,7 +205,7 @@ public abstract class YCSBRunner
     protected String getCommandString(String clazz, String workLoad)
     {
         StringBuilder command = new StringBuilder("java -cp ");
-        command.append("target/*");
+        command.append(clientjarlocation);
         command.append(":");
         command.append(ycsbJarLocation);
         command.append(" com.yahoo.ycsb.Client -db ");
