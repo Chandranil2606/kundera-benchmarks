@@ -94,7 +94,8 @@ public class KunderaMongoClient extends DB
         try
         {
             final Object o = em.find(MongoUser.class, key);
-//            assert o != null;
+            assert o != null;
+            em.clear();
             j++;
             if (j % 5000 == 0)
             {
