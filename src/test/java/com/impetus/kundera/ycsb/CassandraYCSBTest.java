@@ -59,6 +59,9 @@ public class CassandraYCSBTest extends YCSBBaseTest
     void testConcurrentWorkload() throws IOException, ConfigurationException
     {
         onChangeRunType("load");
+        Runtime runtime = Runtime.getRuntime();
+        runner.startServer(true, runtime);
+
         process();
     }
 
@@ -93,8 +96,8 @@ public class CassandraYCSBTest extends YCSBBaseTest
         config.setProperty("ycsbjar.location", ycsbJarLocation);
         config.save();
         runner = new CassandraRunner(propsFileName, config);
-        Runtime runtime = Runtime.getRuntime();
-        runner.startServer(runType.equals("load"), runtime);
+//        Runtime runtime = Runtime.getRuntime();
+//        runner.startServer(runType.equals("load"), runtime);
 
     }
 

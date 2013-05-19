@@ -54,6 +54,9 @@ public class HBaseYCSBTest extends YCSBBaseTest
     private void testConcurrentWorkload() throws IOException, ConfigurationException
     {
         onChangeRunType("load");
+        Runtime runtime = Runtime.getRuntime();
+        runner.startServer(true, runtime);
+
         process();
     }
 
@@ -88,8 +91,8 @@ public class HBaseYCSBTest extends YCSBBaseTest
         config.setProperty("ycsbjar.location", ycsbJarLocation);
         config.save();
         runner = new HBaseRunner(propsFileName, config);
-        Runtime runtime = Runtime.getRuntime();
-        runner.startServer(runType.equals("load"), runtime);
+//        Runtime runtime = Runtime.getRuntime();
+//        runner.startServer(runType.equals("load"), runtime);
 
     }
 

@@ -55,6 +55,8 @@ public class MongoDBYCSBTest extends YCSBBaseTest
     private void testConcurrentWorkload() throws IOException, ConfigurationException
     {
         onChangeRunType("load");
+        Runtime runtime = Runtime.getRuntime();
+        runner.startServer(true, runtime);
         process();
     }
 

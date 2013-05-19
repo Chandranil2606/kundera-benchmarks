@@ -47,6 +47,7 @@ public class RedisYCSBTest extends YCSBBaseTest
     public void onTest() throws Exception
     {
         testConcurrentWorkload();
+        
         testRead();
 //        testUpdate();
     }
@@ -54,6 +55,8 @@ public class RedisYCSBTest extends YCSBBaseTest
     private void testConcurrentWorkload() throws IOException, ConfigurationException
     {
         onChangeRunType("load");
+        Runtime runtime = Runtime.getRuntime();
+        runner.startServer(true, runtime);
         process();
     }
 
@@ -88,8 +91,7 @@ public class RedisYCSBTest extends YCSBBaseTest
         config.setProperty("ycsbjar.location", ycsbJarLocation);
         config.save();
         runner = new RedisRunner(propsFileName, config);
-        Runtime runtime = Runtime.getRuntime();
-        runner.startServer(runType.equals("load"), runtime);
+//        runner.startServer(runType.equals("load"), runtime);
 
     }
 }
