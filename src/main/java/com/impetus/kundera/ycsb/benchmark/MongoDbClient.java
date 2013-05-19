@@ -236,7 +236,6 @@ public class MongoDbClient extends DB
             DBObject fieldsToReturn = new BasicDBObject();
             boolean returnAllFields = fields == null;
 
-            System.out.println(returnAllFields);
             DBObject queryResult = null;
             if (!returnAllFields)
             {
