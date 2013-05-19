@@ -87,16 +87,19 @@ public abstract class YCSBBaseTest
     protected void onRead() throws ConfigurationException, NumberFormatException, IOException
     {
         String[] workLoadList = config.getStringArray("workload.file");
-        for(String workLoad : workLoadList)
-        {
+//        for(String workLoad : workLoadList)
+//        {
             PropertiesConfiguration workLoadConfig = new PropertiesConfiguration(workLoadPackage+"/"+"workloadinsert1000000");
             workLoadConfig.setProperty("readproportion", "1");
             workLoadConfig.setProperty("updateproportion", "0");
             workLoadConfig.setProperty("scanproportion", "0");
             workLoadConfig.setProperty("insertproportion", "0");
             workLoadConfig.save();
+           
+            config.setProperty("workload.file", "workloadinsert1000000");
+            config.save();
             process();
-        }
+//        }
     	
     }
 
