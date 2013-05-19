@@ -52,7 +52,7 @@ public class CassandraYCSBTest extends YCSBBaseTest
     {
         testConcurrentWorkload();
         testRead();
-        testUpdate();
+//        testUpdate();
 
     }
 

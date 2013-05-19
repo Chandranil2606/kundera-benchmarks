@@ -48,7 +48,7 @@ public class HBaseYCSBTest extends YCSBBaseTest
     {
         testConcurrentWorkload();
         testRead();
-        testUpdate();
+//        testUpdate();
     }
 
     private void testConcurrentWorkload() throws IOException, ConfigurationException
