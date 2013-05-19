@@ -132,7 +132,7 @@ public abstract class YCSBRunner
                         totalTime = Double.parseDouble(line.substring(line.lastIndexOf(", ") + 2));
                         logger.info("Total time taken " + totalTime);
                     }
-                    if (line.contains("Operations") && noOfOperations == 0)
+                    if (line.contains("Operations") && !line.contains(".") && noOfOperations == 0)
                     {
                         noOfOperations = Long.parseLong(line.substring(line.lastIndexOf(", ") + 2));
                         logger.info("Total no of oprations " + noOfOperations);
