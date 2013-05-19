@@ -20,7 +20,7 @@ import com.impetus.kundera.ycsb.utils.MailUtils;
 public class HBaseRunner extends YCSBRunner
 {
 
-    private HBaseOperationUtils utils = new HBaseOperationUtils();
+//    private HBaseOperationUtils utils;
 
     private String startHBaseServerCommand;
 
@@ -53,7 +53,7 @@ public class HBaseRunner extends YCSBRunner
           */
             try
             {
-                utils.startHBaseServer(runTime, startHBaseServerCommand);
+                HBaseOperationUtils.startHBaseServer(runTime, startHBaseServerCommand);
             }
             catch (IOException e)
             {
@@ -67,6 +67,7 @@ public class HBaseRunner extends YCSBRunner
             }
         }
 
+//        utils = new HBaseOperationUtils();
     }
 
     /*
@@ -80,7 +81,7 @@ public class HBaseRunner extends YCSBRunner
     {
         try
         {
-            utils.stopHBaseServer(stopHBaseServerCommand, runTime);
+            HBaseOperationUtils.stopHBaseServer(stopHBaseServerCommand, runTime);
         }
         catch (IOException e)
         {

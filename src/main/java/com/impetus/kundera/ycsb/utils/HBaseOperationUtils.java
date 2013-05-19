@@ -50,7 +50,7 @@ public final class HBaseOperationUtils
      *             Signals that an I/O exception has occurred.
      * @throws InterruptedException
      */
-    public void startHBaseServer(Runtime runtime, String startHBaseServerCommand) throws IOException,
+    public static void startHBaseServer(Runtime runtime, String startHBaseServerCommand) throws IOException,
             InterruptedException
     {
         logger.info("Starting hbase server ...........");
@@ -68,7 +68,7 @@ public final class HBaseOperationUtils
      *             Signals that an I/O exception has occurred.
      * @throws InterruptedException
      */
-    public void stopHBaseServer(String stopHBaseServerCommand, Runtime runtime) throws IOException,
+    public static void stopHBaseServer(String stopHBaseServerCommand, Runtime runtime) throws IOException,
             InterruptedException
     {
         logger.info("Stoping hbase server..");
