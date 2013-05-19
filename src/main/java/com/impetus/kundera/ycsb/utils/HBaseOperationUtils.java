@@ -54,7 +54,8 @@ public final class HBaseOperationUtils
             InterruptedException
     {
         logger.info("Starting hbase server ...........");
-        runtime.exec(startHBaseServerCommand).waitFor();
+        runtime.exec(startHBaseServerCommand);
+        Thread.sleep(10000);
         logger.info("started..............");
     }
 
