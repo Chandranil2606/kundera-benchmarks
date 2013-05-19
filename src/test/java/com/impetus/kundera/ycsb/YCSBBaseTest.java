@@ -89,14 +89,14 @@ public abstract class YCSBBaseTest
         String[] workLoadList = config.getStringArray("workload.file");
 //        for(String workLoad : workLoadList)
 //        {
-            PropertiesConfiguration workLoadConfig = new PropertiesConfiguration(workLoadPackage+"/"+"workloadinsert1000000");
+            PropertiesConfiguration workLoadConfig = new PropertiesConfiguration(workLoadPackage+"/"+"workloadinsert2000000");
             workLoadConfig.setProperty("readproportion", "1");
             workLoadConfig.setProperty("updateproportion", "0");
             workLoadConfig.setProperty("scanproportion", "0");
             workLoadConfig.setProperty("insertproportion", "0");
             workLoadConfig.save();
            
-            config.setProperty("workload.file", "workloadinsert1000000");
+            config.setProperty("workload.file", "workloadinsert2000000");
             config.save();
             process();
 //        }
