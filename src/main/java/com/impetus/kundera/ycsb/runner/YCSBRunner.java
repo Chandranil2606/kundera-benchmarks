@@ -91,8 +91,8 @@ public abstract class YCSBRunner
 
     public void run(final String workLoad, final int threadCount) throws IOException
     {
-        int runCounter = /*crudUtils.getMaxRunSequence(new Date(), runType)*/1;
-//        runCounter = runCounter + 1;
+        int runCounter = crudUtils.getMaxRunSequence(new Date(), runType);
+        runCounter = runCounter + 1;
         noOfThreads = threadCount;
         // id column of performanceNoInfo table
         Date id = new Date();
@@ -191,7 +191,7 @@ public abstract class YCSBRunner
                 {
                     info.setThroughput(throughput.round(MathContext.DECIMAL32));
                 }
-//                crudUtils.persistInfo(info);
+                crudUtils.persistInfo(info);
                 timeTakenByClient.put(client, throughput);
                 
                 //Stop server
