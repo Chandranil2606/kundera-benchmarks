@@ -43,10 +43,10 @@ public class MailUtils
         emailSender.setUsername("noreply-kundea@impetus.co.in");
 //        emailSender.setJavaMailProperties(props);
         SimpleMailMessage mail = new SimpleMailMessage();
-//        mail.setTo(new String[] {"vivek.mishra@impetus.co.in", "amresh.singh@impetus.co.in",
-//                "kuldeep.mishra@impetus.co.in", "vivek.shrivastava@impetus.co.in"});
+        mail.setTo(new String[] {"vivek.mishra@impetus.co.in", "amresh.singh@impetus.co.in",
+                "kuldeep.mishra@impetus.co.in", "vivek.shrivastava@impetus.co.in"});
 
-        mail.setTo(new String[] {"vivek.mishra@impetus.co.in"});
+//        mail.setTo(new String[] {"vivek.mishra@impetus.co.in"});
 
         mail.setFrom("noreply-kundea@impetus.co.in");
 
