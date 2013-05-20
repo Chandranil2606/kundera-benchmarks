@@ -75,7 +75,7 @@ public final class HBaseOperationUtils
     {
         logger.info("Starting hbase server ...........");
         runtime.exec(startHBaseServerCommand);
-        Thread.sleep(20000);
+        Thread.sleep(40000);
         logger.info("started..............");
     }
 
