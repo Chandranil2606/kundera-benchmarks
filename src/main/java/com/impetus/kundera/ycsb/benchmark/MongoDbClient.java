@@ -109,7 +109,7 @@ public class MongoDbClient extends DB
 
                 // need to append db to url.
                 url += "/" + database;
-                System.out.println("new database url = " + url);
+                // System.out.println("new database url = " + url);
                 mongo = new Mongo(new DBAddress(url));
                 mongo.getMongoOptions().setConnectionsPerHost(100);
                 // System.out.println("mongo connection created with " + url);
@@ -237,7 +237,7 @@ public class MongoDbClient extends DB
             boolean returnAllFields = fields == null;
 
             DBObject queryResult = null;
-            if (!returnAllFields)
+          /*  if (!returnAllFields)
             {
                 Iterator<String> iter = fields.iterator();
                 while (iter.hasNext())
@@ -247,9 +247,9 @@ public class MongoDbClient extends DB
                 queryResult = collection.findOne(q, fieldsToReturn);
             }
             else
-            {
+            { */
                 queryResult = collection.findOne(q);
-            }
+            //}
 
             if (queryResult != null)
             {
