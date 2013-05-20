@@ -6,6 +6,8 @@ import javax.persistence.PersistenceException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 
 import common.Logger;
@@ -37,7 +39,25 @@ public final class HBaseOperationUtils
     {
         // TableDescriptors desc = admin.getTableDescriptor(name.getBytes());
         // desc.remove(arg0)
+        admin.disableTable(name);
         admin.deleteTable(name);
+        
+    }
+
+
+    public void createTable(String name, String familyName) throws IOException
+    {
+        if(admin.tableExists(name))
+        {
+            deleteTable(name);
+        }
+        // TableDescriptors desc = admin.getTableDescriptor(name.getBytes());
+        // desc.remove(arg0)
+        HTableDescriptor table = new HTableDescriptor(name);
+        
+        HColumnDescriptor columnFamily = new HColumnDescriptor(familyName);
+        table.addFamily(columnFamily);
+        admin.createTable(table);
     }
 
     /**
@@ -55,7 +75,7 @@ public final class HBaseOperationUtils
     {
         logger.info("Starting hbase server ...........");
         runtime.exec(startHBaseServerCommand);
-        Thread.sleep(10000);
+        Thread.sleep(20000);
         logger.info("started..............");
     }
 

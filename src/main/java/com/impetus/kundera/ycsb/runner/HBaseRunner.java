@@ -54,6 +54,8 @@ public class HBaseRunner extends YCSBRunner
             try
             {
                 HBaseOperationUtils.startHBaseServer(runTime, startHBaseServerCommand);
+                HBaseOperationUtils utils = new HBaseOperationUtils();
+                utils.createTable(schema, columnFamilyOrTable);
             }
             catch (IOException e)
             {

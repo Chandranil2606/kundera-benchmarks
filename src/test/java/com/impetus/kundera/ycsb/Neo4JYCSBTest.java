@@ -47,12 +47,10 @@ public class Neo4JYCSBTest extends YCSBBaseTest
     @Test
     public void onTest() throws Exception
     {
-        // TODO:: Need to look why it is not working properly!
-        /*
         testConcurrentWorkload();
         testRead();
 //        testUpdate();
-    */}
+    }
 
     private void testConcurrentWorkload() throws IOException, ConfigurationException
     {
@@ -77,9 +75,9 @@ public class Neo4JYCSBTest extends YCSBBaseTest
      */
     @After
     public void tearDown() throws Exception
-    {/*
+    {
         onDestroy();
-    */}
+    }
 
     /**
      * @param runType
