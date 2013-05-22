@@ -52,7 +52,7 @@ public class MongoDbClient extends DB
 
     private com.mongodb.DB db = null;
 
-    private DBCollection collection;
+//    private DBCollection collection;
 
     @Override
     /**
@@ -121,7 +121,7 @@ public class MongoDbClient extends DB
                 return;
             }
             db = mongo.getDB(database);
-            collection = db.getCollection("kundera");
+            
     }
 
     @Override
@@ -192,7 +192,8 @@ public class MongoDbClient extends DB
         try
         {
             // db.requestStart();
-
+            
+            DBCollection collection = db.getCollection("kundera");
             DBObject r = new BasicDBObject();
             r.put("_id", key);
             for (String k : values.keySet())
@@ -237,7 +238,8 @@ public class MongoDbClient extends DB
             boolean returnAllFields = fields == null;
 
             DBObject queryResult = null;
-          /*  if (!returnAllFields)
+            DBCollection collection = db.getCollection("kundera");
+            if (!returnAllFields)
             {
                 Iterator<String> iter = fields.iterator();
                 while (iter.hasNext())
@@ -247,10 +249,11 @@ public class MongoDbClient extends DB
                 queryResult = collection.findOne(q, fieldsToReturn);
             }
             else
-            { */
+            { 
                 queryResult = collection.findOne(q);
-            //}
-
+            }
+            
+           
             if (queryResult != null)
             {
                 result.putAll(queryResult.toMap());

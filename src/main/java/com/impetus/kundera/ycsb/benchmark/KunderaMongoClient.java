@@ -16,6 +16,7 @@
 package com.impetus.kundera.ycsb.benchmark;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.Vector;
@@ -26,6 +27,7 @@ import javax.persistence.Persistence;
 
 import org.mortbay.log.Log;
 
+import com.impetus.kundera.client.Client;
 import com.impetus.kundera.ycsb.entities.MongoUser;
 import com.yahoo.ycsb.ByteIterator;
 import com.yahoo.ycsb.DB;
@@ -52,6 +54,8 @@ public class KunderaMongoClient extends DB
     private EntityManager em;
 
     private int j;
+    
+    private Client client;
 
     /**
      * Initialize any state for this DB. Called once per DB instance; there is
@@ -61,6 +65,9 @@ public class KunderaMongoClient extends DB
     {
 //        emf 
         em = emf.createEntityManager();
+        Map<String, Client> clients = (Map<String, Client>) em.getDelegate();
+        
+        client = clients.get("kundera_mongo_pu");
         j = 1;
 
     }
@@ -71,7 +78,7 @@ public class KunderaMongoClient extends DB
      */
     public void cleanup() throws DBException
     {
-       // em.close();
+//        em.close();
         // emf.close();
     }
 
@@ -93,14 +100,17 @@ public class KunderaMongoClient extends DB
     {
         try
         {
-            final Object o = em.find(MongoUser.class, key);
-            assert o != null;
             em.clear();
-            j++;
+            
+            final Object o = em.find(MongoUser.class, key);
+            
+            assert o != null;
+//            em.clear();
+            /*j++;
             if (j % 5000 == 0)
             {
                 em.clear();
-            }
+            }*/
             return Ok;
         }
         catch (Exception e)
@@ -221,6 +231,6 @@ public class KunderaMongoClient extends DB
         KunderaMongoClient client = new KunderaMongoClient();
         client.init();
         client.insert("user", "1", null);
-        client.read("user", "2", null, null);
+        client.read("user", "1", null, null);
     }
 }
