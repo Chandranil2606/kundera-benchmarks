@@ -56,7 +56,7 @@ public class RedisYCSBTest extends YCSBBaseTest
     {
         onChangeRunType("load");
         Runtime runtime = Runtime.getRuntime();
-//        runner.startServer(true, runtime);
+        runner.startServer(true, runtime);
         process();
     }
 
