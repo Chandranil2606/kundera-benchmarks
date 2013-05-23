@@ -105,7 +105,7 @@ public class RedisRunner extends YCSBRunner
                 / timeTakenByClient.get(clients[1]).doubleValue() * 100);
         delta.put("kunderaRedisToJedisDelta", kunderaRedisToJedisDelta);
 
-        if (kunderaRedisToJedisDelta > 10.00)
+       if (kunderaRedisToJedisDelta > 10.00)
         {
              MailUtils.sendMail(delta, isUpdate ? "update" : runType, "redis");
         }

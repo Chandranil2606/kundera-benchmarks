@@ -67,7 +67,8 @@ public class KunderaPelopsClient extends DB
      */
     public void cleanup() throws DBException
     {
-//        em.close();
+        em.clear();
+        em.close();
     }
 
     /**

@@ -78,7 +78,8 @@ public class KunderaMongoClient extends DB
      */
     public void cleanup() throws DBException
     {
-//        em.close();
+        em.clear();
+        em.close();
         // emf.close();
     }
 
@@ -106,11 +107,11 @@ public class KunderaMongoClient extends DB
             
             assert o != null;
 //            em.clear();
-            /*j++;
+            j++;
             if (j % 5000 == 0)
             {
                 em.clear();
-            }*/
+            }
             return Ok;
         }
         catch (Exception e)

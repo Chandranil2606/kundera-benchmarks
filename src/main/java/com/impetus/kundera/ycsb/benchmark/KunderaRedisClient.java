@@ -16,6 +16,7 @@
 package com.impetus.kundera.ycsb.benchmark;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -25,6 +26,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.impetus.kundera.client.Client;
 import com.impetus.kundera.ycsb.entities.RedisUser;
 import com.yahoo.ycsb.ByteIterator;
 import com.yahoo.ycsb.DB;
@@ -53,6 +55,8 @@ public class KunderaRedisClient extends DB
 
     private int j;
 
+    private Client client;
+
 
     /**
      * Initialize any state for this DB. Called once per DB instance; there is
@@ -63,6 +67,10 @@ public class KunderaRedisClient extends DB
         //emf 
  
         em = emf.createEntityManager();
+
+        Map<String, Client> clients = (Map<String, Client>) em.getDelegate();
+        
+        client = clients.get("kundera_redis_pu");
         j = 1;
      //    System.out.println("initialized");
 
@@ -75,6 +83,7 @@ public class KunderaRedisClient extends DB
     public void cleanup() throws DBException
     {
 //        System.out.println(em);
+        em.clear(); 
         em.close();
        // emf.close();
     }
@@ -97,15 +106,18 @@ public class KunderaRedisClient extends DB
     {
         try
         {
+           // em.clear();
+            
+//            Object o = client.find(RedisUser.class, key);
+            
             Object o = em.find(RedisUser.class, key);
 //            System.out.println(o);
-//            assert o != null;
-            em.clear();
+            assert o != null;
             j++;
-           /* if (j % 5000 == 0)
+            if (j % 5000 == 0)
             {
                 em.clear();
-            }*/
+            }
             return Ok;
         }
         catch (Exception e)

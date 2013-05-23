@@ -69,7 +69,8 @@ public class KunderaThriftClient extends DB
      */
     public void cleanup() throws DBException
     {
-//        em.close();
+        em.clear();
+        em.close();
     }
 
     /**
@@ -97,7 +98,11 @@ public class KunderaThriftClient extends DB
             Object o = em.find(ThriftUser.class, key);
             assert o != null;
             j++;
-            em.clear();
+            if (j % 5000 == 0)
+            {
+                em.clear();
+             }
+//            em.clear();
             return Ok;
         }
         catch (Exception e)

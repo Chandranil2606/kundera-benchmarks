@@ -78,7 +78,8 @@ public class KunderaNeo4JClient extends DB
      */
     public void cleanup() throws DBException
     {
-        //em.close();
+        em.clear();
+        em.close();
         //emf.close();
         em.getTransaction().commit();
     }
@@ -119,7 +120,7 @@ public class KunderaNeo4JClient extends DB
         catch (Exception e)
         {
 		e.printStackTrace();
-            logger.error(e);
+//            logger.error(e);
             //em.getTransaction().rollback();
             return Error;
         }

@@ -88,16 +88,20 @@ public class KunderaHBaseClient extends DB
      */
     public int read(String table, String key, Set<String> fields, HashMap<String, ByteIterator> result)
     {
-        if (em == null || !em.isOpen())
+        /*if (em == null || !em.isOpen())
         {
             em = emf.createEntityManager();
-        }
+        }*/
         try
         {
             Object o = em.find(HBaseUser.class, key);
             assert o != null;
             j++;
-            em.clear();
+            if (j % 5000 == 0)
+            {
+                em.clear();
+            }
+//            em.clear();
             return Ok;
         }
         catch (Exception e)

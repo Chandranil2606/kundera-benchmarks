@@ -191,7 +191,7 @@ public abstract class YCSBRunner
                 {
                     info.setThroughput(throughput.round(MathContext.DECIMAL32));
                 }
-                crudUtils.persistInfo(info);
+                 crudUtils.persistInfo(info);
                 timeTakenByClient.put(client, throughput);
                 
                 //Stop server
