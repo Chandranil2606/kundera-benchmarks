@@ -67,7 +67,7 @@ public class MongoDBOperationUtils
         logger.info("Starting mongo server at ..........."  + startMongoServerCommand);
         runtime.exec(startMongoServerCommand);
         logger.info("started..............");
-	Thread.sleep(60000);
+	Thread.sleep(90000);
     }
 
     /**
