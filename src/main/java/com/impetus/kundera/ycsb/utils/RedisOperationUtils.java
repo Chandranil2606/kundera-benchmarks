@@ -60,7 +60,7 @@ public class RedisOperationUtils
     {
         logger.info("Starting redis server at " + startRedisServerCommand + "...........");
         runtime.exec(startRedisServerCommand);
-        Thread.sleep(5000);
+        Thread.sleep(35000);
         logger.info("started..............");
     }
 
