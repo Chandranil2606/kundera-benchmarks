@@ -101,7 +101,7 @@ public class KunderaMongoClient extends DB
     {
         try
         {
-            em.clear();
+         //   em.clear();
             
             final Object o = em.find(MongoUser.class, key);
             

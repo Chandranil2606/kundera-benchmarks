@@ -144,7 +144,7 @@ public class KunderaNeo4JClient extends DB
     {
         try
         {
-            em.clear();
+//            em.clear();
             final Object o = em.find(Neo4JUser.class, key);
             assert o != null;
             j++;
