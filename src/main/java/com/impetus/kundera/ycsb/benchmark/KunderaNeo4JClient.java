@@ -79,7 +79,7 @@ public class KunderaNeo4JClient extends DB
     public void cleanup() throws DBException
     {
         em.clear();
-        em.close();
+//        em.close();
         //emf.close();
         em.getTransaction().commit();
     }
@@ -109,7 +109,7 @@ public class KunderaNeo4JClient extends DB
             em.persist(u);
             
             j++;
-            if (j % 5000 == 0)
+            if (j % 1000 == 0)
             {
                 em.getTransaction().commit();
                 em.clear();

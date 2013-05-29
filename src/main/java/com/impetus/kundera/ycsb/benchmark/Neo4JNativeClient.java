@@ -145,7 +145,7 @@ public class Neo4JNativeClient extends DB
            node.setProperty("ADDRESS", key + "New Street");            
             
             j++;
-            if (j % 5000 == 0)
+            if (j % 1000 == 0)
             {
                 tx.success();
                 tx.finish();                

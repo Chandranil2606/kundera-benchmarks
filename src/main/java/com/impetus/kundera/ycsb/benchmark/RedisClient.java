@@ -154,7 +154,8 @@ public class RedisClient extends DB
 
         Properties props = new Properties();
 
-        props.setProperty("hosts", args[0]);
+        props.setProperty("hosts", "localhost");
+        props.setProperty("password","Kundera@123");
         cli.setProperties(props);
 
         try

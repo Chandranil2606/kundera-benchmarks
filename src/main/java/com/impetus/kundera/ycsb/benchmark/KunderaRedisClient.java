@@ -190,13 +190,13 @@ public class KunderaRedisClient extends DB
                     getString(key, "mishra"));
           // System.out.println("persist" + key );
             em.persist(u);
-            em.clear();
+//            em.clear();
 	//	 System.out.println( j );
 
             j++;
             if (j % 5000 == 0)
             {
-		em.flush();
+//		em.flush();
                 em.clear();
                 j = 0;
             } 
