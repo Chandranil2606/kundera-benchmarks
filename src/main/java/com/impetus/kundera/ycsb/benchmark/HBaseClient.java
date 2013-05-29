@@ -413,7 +413,6 @@ public class HBaseClient extends com.yahoo.ycsb.DB
      */
     public int insert(String table, String key, HashMap<String, ByteIterator> values)
     {
-        System.out.println(_table);
         return update(_table, key, values);
     }
 
