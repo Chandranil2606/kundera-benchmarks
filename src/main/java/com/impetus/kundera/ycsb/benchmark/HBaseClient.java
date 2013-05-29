@@ -106,23 +106,23 @@ public class HBaseClient extends com.yahoo.ycsb.DB
      */
     public void cleanup() throws DBException
     {
-        // Get the measurements instance as this is the only client that should
-        // count clean up time like an update since autoflush is off.
-        Measurements _measurements = Measurements.getMeasurements();
-        try
-        {
-            long st = System.nanoTime();
-            if (_hTable != null)
-            {
-                _hTable.flushCommits();
-            }
-            long en = System.nanoTime();
-            _measurements.measure("UPDATE", (int) ((en - st) / 1000));
-        }
-        catch (IOException e)
-        {
-            throw new DBException(e);
-        }
+//        // Get the measurements instance as this is the only client that should
+//        // count clean up time like an update since autoflush is off.
+////        Measurements _measurements = Measurements.getMeasurements();
+//        try
+//        {
+////            long st = System.nanoTime();
+//     /*       if (_hTable != null)
+//            {
+//                _hTable.flushCommits();
+//            }*/
+////            long en = System.nanoTime();
+////            _measurements.measure("UPDATE", (int) ((en - st) / 1000));
+//        }
+//        catch (IOException e)
+//        {
+//            throw new DBException(e);
+//        }
     }
 
     public void getHTable(String table) throws IOException
@@ -413,7 +413,61 @@ public class HBaseClient extends com.yahoo.ycsb.DB
      */
     public int insert(String table, String key, HashMap<String, ByteIterator> values)
     {
-        return update(_table, key, values);
+        // if this is a "new" table, init HTable object. Else, use existing one
+        try
+        {
+            if (_hTable == null)
+            {
+                getHTable(_table);
+            }
+        }
+        catch (IOException e)
+        {
+            System.err.println("Error accessing HBase table: " + e);
+            return ServerError;
+        }
+
+        /*
+         * if (!_table.equals(table)) { _hTable = null; try { getHTable(table);
+         * _table = table; } catch (IOException e) {
+         * System.err.println("Error accessing HBase table: "+e); return
+         * ServerError; } }
+         */
+
+        if (_debug)
+        {
+            System.out.println("Setting up put for key: " + key);
+        }
+        Put p = new Put(Bytes.toBytes(key));
+        for (Map.Entry<String, ByteIterator> entry : values.entrySet())
+        {
+            if (_debug)
+            {
+                System.out.println("Adding field/value " + entry.getKey() + "/" + entry.getValue() + " to put request");
+            }
+            p.add(_columnFamilyBytes, Bytes.toBytes(entry.getKey()), entry.getValue().toArray());
+        }
+
+        try
+        {
+            _hTable.put(p);
+        }
+        catch (IOException e)
+        {
+            if (_debug)
+            {
+                System.err.println("Error doing put: " + e);
+            }
+            return ServerError;
+        }
+        catch (ConcurrentModificationException e)
+        {
+            // do nothing for now...hope this is rare
+            return ServerError;
+        }
+
+        return Ok;
+
     }
 
     /**
