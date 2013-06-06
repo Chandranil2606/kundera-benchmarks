@@ -31,7 +31,7 @@ public class HBaseRunner extends YCSBRunner
         super(propertyFile, config);
         String server = config.getString("server.location");
         this.startHBaseServerCommand = server+"start-hbase.sh";
-        this.stopHBaseServerCommand = server+"stop-hbase.sh";
+        this.stopHBaseServerCommand = "/root/software/stopServers.sh";
         crudUtils = new HibernateCRUDUtils();
     }
 
