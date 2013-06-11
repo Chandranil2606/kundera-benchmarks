@@ -102,7 +102,7 @@ public class CassandraRunner extends YCSBRunner
     }
 
     protected void sendMail()
-    {/*
+    {
         Map<String, Double> delta = new HashMap<String, Double>();
         double kunderaPelopsToPelopsDelta = 0.0;
         double kunderaThriftToThriftDelta = 0.0;
@@ -128,11 +128,15 @@ public class CassandraRunner extends YCSBRunner
         delta.put("kunderaThriftToThriftDelta", kunderaThriftToThriftDelta);
         // delta.put("kunderaPelopsToHectorDelta", kunderaPelopsToHectorDelta);
 
-        if ( (kunderaPelopsToHectorDelta > 10.00) || (kunderaPelopsToPelopsDelta > 10.00)
-                || (kunderaThriftToThriftDelta > 10.00))
+        if ( /*(kunderaPelopsToHectorDelta > 10.00) || */(kunderaPelopsToPelopsDelta > 8.00)
+                || (kunderaThriftToThriftDelta > 8.00))
         {
             MailUtils.sendMail(delta, isUpdate ? "update" : runType, "cassandra");
+        } else
+        {
+            MailUtils.sendPositiveEmail(delta, isUpdate ? "update" : runType, "cassandra");
+            
         }
 
-    */}
+    }
 }

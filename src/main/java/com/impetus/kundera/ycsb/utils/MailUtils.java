@@ -30,24 +30,13 @@ public class MailUtils
     public static void sendMail(Map<String, Double> delta, String operationType, String dataStore)
     {
         String host = "192.168.150.5";
-//        int port = 465;
-//        Properties props = new Properties();
-////        props.put("mail.smtp.auth", "true");
-////        props.put("mail.smtp.starttls.enable", "true");
-//        // props.put("mail.smtp.port", "465");
-////        props.put("mail.smtp.host", host);
-
         JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
         emailSender.setHost(host);
         // emailSender.setPort(port);
         emailSender.setUsername("noreply-kundea@impetus.co.in");
-//        emailSender.setJavaMailProperties(props);
         SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(new String[] {"vivek.mishra@impetus.co.in", "amresh.singh@impetus.co.in",
-                "kuldeep.mishra@impetus.co.in", "vivek.shrivastava@impetus.co.in"});
-
-//        mail.setTo(new String[] {"vivek.mishra@impetus.co.in"});
-
+        mail.setTo(new String[] { "vivek.mishra@impetus.co.in", "amresh.singh@impetus.co.in",
+                "kuldeep.mishra@impetus.co.in", "vivek.shrivastava@impetus.co.in" });
         mail.setFrom("noreply-kundea@impetus.co.in");
 
         if (operationType.equalsIgnoreCase("load"))
@@ -63,7 +52,7 @@ public class MailUtils
         String mailBody = null;
         for (String key : delta.keySet())
         {
- if (mailBody == null)
+            if (mailBody == null)
             {
                 mailBody = key + " Performance Delta ==> " + delta.get(key) + " \n";
             }
@@ -76,6 +65,43 @@ public class MailUtils
         emailSender.send(mail);
     }
 
+    
+    public static void sendPositiveEmail(Map<String, Double> delta, String operationType, String dataStore)
+    {
+        String host = "192.168.150.5";
+        JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
+        emailSender.setHost(host);
+        // emailSender.setPort(port);
+        emailSender.setUsername("noreply-kundea@impetus.co.in");
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(new String[] { "vivek.mishra@impetus.co.in","vivek.shrivastava@impetus.co.in" });
+        mail.setFrom("noreply-kundea@impetus.co.in");
+
+        if (operationType.equalsIgnoreCase("load"))
+        {
+            operationType = "write";
+        }
+        else if (operationType.equalsIgnoreCase("t"))
+        {
+            operationType = "read";
+        }
+        mail.setSubject(operationType + " kundera-" + dataStore + "-performance Delta");
+
+        String mailBody = null;
+        for (String key : delta.keySet())
+        {
+            if (mailBody == null)
+            {
+                mailBody = key + " Performance Delta ==> " + delta.get(key) + " \n";
+            }
+            else
+            {
+                mailBody = mailBody + key + " Performance Delta ==> " + delta.get(key) + " \n";
+            }
+        }
+        mail.setText(mailBody);
+        emailSender.send(mail);
+    }
 
     public static void main(String[] args)
     {
