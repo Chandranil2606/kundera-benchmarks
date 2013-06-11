@@ -27,46 +27,21 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
  */
 public class MailUtils
 {
+
     public static void sendMail(Map<String, Double> delta, String operationType, String dataStore)
     {
-        String host = "192.168.150.5";
-        JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
-        emailSender.setHost(host);
-        // emailSender.setPort(port);
-        emailSender.setUsername("noreply-kundea@impetus.co.in");
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(new String[] { "vivek.mishra@impetus.co.in", "amresh.singh@impetus.co.in",
-                "kuldeep.mishra@impetus.co.in", "vivek.shrivastava@impetus.co.in" });
-        mail.setFrom("noreply-kundea@impetus.co.in");
-
-        if (operationType.equalsIgnoreCase("load"))
-        {
-            operationType = "write";
-        }
-        else if (operationType.equalsIgnoreCase("t"))
-        {
-            operationType = "read";
-        }
-        mail.setSubject(operationType + " kundera-" + dataStore + "-performance Delta");
-
-        String mailBody = null;
-        for (String key : delta.keySet())
-        {
-            if (mailBody == null)
-            {
-                mailBody = key + " Performance Delta ==> " + delta.get(key) + " \n";
-            }
-            else
-            {
-                mailBody = mailBody + key + " Performance Delta ==> " + delta.get(key) + " \n";
-            }
-        }
-        mail.setText(mailBody);
-        emailSender.send(mail);
+        onSendEmail(delta, operationType, dataStore, new String[] { "vivek.mishra@impetus.co.in",
+                "amresh.singh@impetus.co.in", "kuldeep.mishra@impetus.co.in", "vivek.shrivastava@impetus.co.in" });
     }
 
-    
     public static void sendPositiveEmail(Map<String, Double> delta, String operationType, String dataStore)
+    {
+        onSendEmail(delta, operationType, dataStore, new String[] { "vivek.mishra@impetus.co.in",
+                "vivek.shrivastava@impetus.co.in" });
+    }
+
+    private static void onSendEmail(Map<String, Double> delta, String operationType, String dataStore,
+            String[] reciepents)
     {
         String host = "192.168.150.5";
         JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
@@ -74,7 +49,7 @@ public class MailUtils
         // emailSender.setPort(port);
         emailSender.setUsername("noreply-kundea@impetus.co.in");
         SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo(new String[] { "vivek.mishra@impetus.co.in","vivek.shrivastava@impetus.co.in" });
+        mail.setTo(reciepents);
         mail.setFrom("noreply-kundea@impetus.co.in");
 
         if (operationType.equalsIgnoreCase("load"))
