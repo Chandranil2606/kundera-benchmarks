@@ -41,8 +41,9 @@
 	</persistence-unit>
 
 	<persistence-unit name="kundera_rdbms_pu">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.impetus.kundera.ycsb.entities.PerformanceNoInfo</class>
+			<provider>com.impetus.kundera.KunderaPersistence</provider>
+<!-- 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+ -->		<class>com.impetus.kundera.ycsb.entities.PerformanceNoInfo</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
