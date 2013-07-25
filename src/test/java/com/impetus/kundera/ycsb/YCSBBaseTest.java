@@ -24,14 +24,18 @@ import com.impetus.kundera.ycsb.runner.YCSBRunner;
 
 /**
  * @author vivek.mishra
- *
+ * 
  */
 public abstract class YCSBBaseTest
 {
     protected PropertiesConfiguration config;
+
     protected String workLoadPackage;
+
     protected YCSBRunner runner;
+
     protected String propsFileName;
+
     protected String ycsbJarLocation;
 
     /**
@@ -39,11 +43,11 @@ public abstract class YCSBBaseTest
      */
     protected void setUp() throws Exception
     {
-        propsFileName=System.getProperty("fileName");
-//        System.out.println(propsFileName);
+        propsFileName = System.getProperty("fileName");
+        // System.out.println(propsFileName);
         config = new PropertiesConfiguration(propsFileName);
-        ycsbJarLocation = config.getString("ycsbjar.location"); 
-        workLoadPackage = config.getString("workload.dir","src/main/resources/workloads");
+        ycsbJarLocation = config.getString("ycsbjar.location");
+        workLoadPackage = config.getString("workload.dir", "src/main/resources/workloads");
     }
 
     /**
@@ -53,14 +57,14 @@ public abstract class YCSBBaseTest
     {
         int noOfThreads = 1;
         String[] workLoadList = config.getStringArray("bulk.workload.type");
-        
-        for(String workLoad : workLoadList)
+
+        for (String workLoad : workLoadList)
         {
-            runner.run(workLoadPackage+"/"+workLoad, noOfThreads);
+            runner.run(workLoadPackage + "/" + workLoad, noOfThreads);
         }
 
     }
-    
+
     /**
      * @throws NumberFormatException
      * @throws IOException
@@ -71,50 +75,46 @@ public abstract class YCSBBaseTest
         String[] noOfThreads = config.getStringArray("threads");
 
         String[] workLoadList = config.getStringArray("workload.file");
-        
-        for(int i=0;i<noOfThreads.length;i++)
+
+        for (int i = 0; i < noOfThreads.length; i++)
         {
-            runner.run(workLoadPackage+"/"+workLoadList[0], Integer.parseInt(noOfThreads[i]));
+            runner.run(workLoadPackage + "/" + workLoadList[0], Integer.parseInt(noOfThreads[i]));
         }
 
     }
-    
+
     /**
      * @throws ConfigurationException
-     * @throws IOException 
-     * @throws NumberFormatException 
+     * @throws IOException
+     * @throws NumberFormatException
      */
     protected void onRead() throws ConfigurationException, NumberFormatException, IOException
     {
-        String[] workLoadList = config.getStringArray("workload.file");
-//        for(String workLoad : workLoadList)
-//        {
-            PropertiesConfiguration workLoadConfig = new PropertiesConfiguration(workLoadPackage+"/"+"workloadinsert1000000");
-            workLoadConfig.setProperty("readproportion", "1");
-            workLoadConfig.setProperty("updateproportion", "0");
-            workLoadConfig.setProperty("scanproportion", "0");
-            workLoadConfig.setProperty("insertproportion", "0");
-            workLoadConfig.save();
-           
-            config.setProperty("workload.file", "workloadinsert1000000");
-            config.save();
-            process();
-//        }
-    	
-    }
+        PropertiesConfiguration workLoadConfig = new PropertiesConfiguration(workLoadPackage + "/"
+                + "workloadinsert1000000");
+        workLoadConfig.setProperty("readproportion", "1");
+        workLoadConfig.setProperty("updateproportion", "0");
+        workLoadConfig.setProperty("scanproportion", "0");
+        workLoadConfig.setProperty("insertproportion", "0");
+        workLoadConfig.save();
 
+        config.setProperty("workload.file", "workloadinsert1000000");
+        config.save();
+        process();
+
+    }
 
     /**
      * @throws ConfigurationException
-     * @throws IOException 
-     * @throws NumberFormatException 
+     * @throws IOException
+     * @throws NumberFormatException
      */
     protected void onUpdate() throws ConfigurationException, NumberFormatException, IOException
     {
         String[] workLoadList = config.getStringArray("workload.file");
-        for(String workLoad : workLoadList)
+        for (String workLoad : workLoadList)
         {
-            PropertiesConfiguration workLoadConfig = new PropertiesConfiguration(workLoadPackage+"/"+workLoad);
+            PropertiesConfiguration workLoadConfig = new PropertiesConfiguration(workLoadPackage + "/" + workLoad);
             workLoadConfig.setProperty("readproportion", "0");
             workLoadConfig.setProperty("updateproportion", "1");
             workLoadConfig.setProperty("scanproportion", "0");
@@ -122,19 +122,18 @@ public abstract class YCSBBaseTest
             workLoadConfig.save();
             process();
         }
-        
+
     }
-	
-    protected abstract void onChangeRunType(final String runType) throws ConfigurationException; 
+
+    protected abstract void onChangeRunType(final String runType) throws ConfigurationException;
 
     protected void onDestroy() throws ConfigurationException
     {
-            config.clearProperty("update");
-            config.save();
-            Runtime runtime = Runtime.getRuntime();
-            runner.stopServer(runtime);
+        config.clearProperty("update");
+        config.save();
+        Runtime runtime = Runtime.getRuntime();
+        runner.stopServer(runtime);
     }
-
 
     /**
      * @param runType
@@ -145,6 +144,5 @@ public abstract class YCSBBaseTest
         config.setProperty("update", "true");
         onChangeRunType("t");
     }
-
 
 }
