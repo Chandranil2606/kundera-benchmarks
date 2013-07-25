@@ -19,6 +19,7 @@
 			<property name="kundera.pool.size.max.active" value="50" />
 			<property name="kundera.pool.size.max.total" value="50" />
 			<property name="kundera.client.property" value="kunderacassandraloadbalancer.xml" />
+			<property name="kundera.ddl.auto.prepare" value="update" />
 		</properties>
 	</persistence-unit>
 
@@ -37,6 +38,7 @@
 			<property name="kundera.pool.size.max.active" value="50" />
 			<property name="kundera.pool.size.max.total" value="50" />
 			<property name="kundera.client.property" value="kunderacassandraloadbalancer.xml" />
+			<property name="kundera.ddl.auto.prepare" value="update" />
 		</properties>
 	</persistence-unit>
 
@@ -119,7 +121,7 @@
 			<property name="kundera.cache.provider.class"
 				value="com.impetus.kundera.cache.ehcache.EhCacheProvider" />
 			<property name="kundera.cache.config.resource" value="/ehcache-test.xml" />
-			<property name="kundera.ddl.auto.prepare" value="create" />
+			<property name="kundera.ddl.auto.prepare" value="update" />
 		</properties>
 	</persistence-unit>
 
