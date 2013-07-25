@@ -50,7 +50,7 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.connection.url"
-				value="jdbc:mysql://192.168.145.168:3306/testPerformance" />
+				value="jdbc:mysql://localhost:3306/testPerformance" />
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="impetus" />
 			<property name="hibernate.show_sql" value="false" />
