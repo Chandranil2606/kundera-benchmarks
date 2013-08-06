@@ -77,6 +77,7 @@ public abstract class YCSBRunner
     public YCSBRunner(final String propertyFile, final Configuration config)
     {
         java.util.logging.Logger.getGlobal().setLevel(Level.OFF);
+     
         this.propertyFile=propertyFile;
         ycsbJarLocation = config.getString("ycsbjar.location");
         clientjarlocation = config.getString("clientjar.location");
