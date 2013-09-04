@@ -44,15 +44,15 @@ import com.yahoo.ycsb.StringByteIterator;
 public class MongoDbClient extends DB
 {
 
-    private  Mongo mongo;
+    private static Mongo mongo;
 
     private WriteConcern writeConcern;
 
     private String database;
 
-    private com.mongodb.DB db = null;
+    private static com.mongodb.DB db = null;
 
-//    private DBCollection collection;
+    // private DBCollection collection;
 
     @Override
     /**
@@ -61,67 +61,77 @@ public class MongoDbClient extends DB
      */
     public void init() throws DBException
     {
-            // initialize MongoDb driver
-            Properties props = getProperties();
-            String host=props.getProperty("hosts");;
-            String port=props.getProperty("port");
-            String url = "mongodb://"+host+":"+port;
-//            String url = props.getProperty("mongodb.url", "mongodb://192.168.145.168:27017");
-            database = props.getProperty("schema", "kundera");
-            String writeConcernType = props.getProperty("mongodb.writeConcern", "safe").toLowerCase();
+        // initialize MongoDb driver
+        Properties props = getProperties();
+        String host = props.getProperty("hosts");
+        ;
+        String port = props.getProperty("port");
+        String url = "mongodb://" + host + ":" + port;
+        // String url = props.getProperty("mongodb.url",
+        // "mongodb://192.168.145.168:27017");
+        database = props.getProperty("schema", "kundera");
+        String writeConcernType = props.getProperty("mongodb.writeConcern", "safe").toLowerCase();
 
-            if ("none".equals(writeConcernType))
-            {
-                writeConcern = WriteConcern.NONE;
-            }
-            else if ("safe".equals(writeConcernType))
-            {
-                writeConcern = WriteConcern.SAFE;
-            }
-            else if ("normal".equals(writeConcernType))
-            {
-                writeConcern = WriteConcern.NORMAL;
-            }
-            else if ("fsync_safe".equals(writeConcernType))
-            {
-                writeConcern = WriteConcern.FSYNC_SAFE;
-            }
-            else if ("replicas_safe".equals(writeConcernType))
-            {
-                writeConcern = WriteConcern.REPLICAS_SAFE;
-            }
-            else
-            {
-                System.err.println("ERROR: Invalid writeConcern: '" + writeConcernType + "'. "
-                        + "Must be [ none | safe | normal | fsync_safe | replicas_safe ]");
-                System.exit(1);
-            }
+        if ("none".equals(writeConcernType))
+        {
+            writeConcern = WriteConcern.NONE;
+        }
+        else if ("safe".equals(writeConcernType))
+        {
+            writeConcern = WriteConcern.SAFE;
+        }
+        else if ("normal".equals(writeConcernType))
+        {
+            writeConcern = WriteConcern.NORMAL;
+        }
+        else if ("fsync_safe".equals(writeConcernType))
+        {
+            writeConcern = WriteConcern.FSYNC_SAFE;
+        }
+        else if ("replicas_safe".equals(writeConcernType))
+        {
+            writeConcern = WriteConcern.REPLICAS_SAFE;
+        }
+        else
+        {
+            System.err.println("ERROR: Invalid writeConcern: '" + writeConcernType + "'. "
+                    + "Must be [ none | safe | normal | fsync_safe | replicas_safe ]");
+            System.exit(1);
+        }
 
-            try
+        synchronized (mongo)
+        {
+            if (mongo == null)
             {
-                // strip out prefix since Java driver doesn't currently support
-                // standard connection format URL yet
-                // http://www.mongodb.org/display/DOCS/Connections
-                if (url.startsWith("mongodb://"))
+                try
                 {
-                    url = url.substring(10);
+                    // strip out prefix since Java driver doesn't currently
+                    // support
+                    // standard connection format URL yet
+                    // http://www.mongodb.org/display/DOCS/Connections
+                    if (url.startsWith("mongodb://"))
+                    {
+                        url = url.substring(10);
+                    }
+
+                    // need to append db to url.
+                    url += "/" + database;
+                    // System.out.println("new database url = " + url);
+                    mongo = new Mongo(new DBAddress(url));
+                    mongo.getMongoOptions().setConnectionsPerHost(100);
+                    // System.out.println("mongo connection created with " +
+                    // url);
+                }
+                catch (Exception e1)
+                {
+                    System.err.println("Could not initialize MongoDB connection pool for Loader: " + e1.toString());
+                    e1.printStackTrace();
+                    return;
                 }
 
-                // need to append db to url.
-                url += "/" + database;
-                // System.out.println("new database url = " + url);
-                mongo = new Mongo(new DBAddress(url));
-                mongo.getMongoOptions().setConnectionsPerHost(100);
-                // System.out.println("mongo connection created with " + url);
+                db = mongo.getDB(database);
             }
-            catch (Exception e1)
-            {
-                System.err.println("Could not initialize MongoDB connection pool for Loader: " + e1.toString());
-                e1.printStackTrace();
-                return;
-            }
-            db = mongo.getDB(database);
-            
+        }
     }
 
     @Override
@@ -131,7 +141,7 @@ public class MongoDbClient extends DB
      */
     public void cleanup() throws DBException
     {
-        try
+       /* try
         {
             mongo.close();
         }
@@ -140,7 +150,7 @@ public class MongoDbClient extends DB
             System.err.println("Could not close MongoDB connection pool: " + e1.toString());
             e1.printStackTrace();
             return;
-        }
+        }*/
     }
 
     @Override
@@ -192,7 +202,7 @@ public class MongoDbClient extends DB
         try
         {
             // db.requestStart();
-            
+
             DBCollection collection = db.getCollection("kundera");
             DBObject r = new BasicDBObject();
             r.put("_id", key);
@@ -249,11 +259,10 @@ public class MongoDbClient extends DB
                 queryResult = collection.findOne(q, fieldsToReturn);
             }
             else
-            { 
+            {
                 queryResult = collection.findOne(q);
             }
-            
-           
+
             if (queryResult != null)
             {
                 result.putAll(queryResult.toMap());
