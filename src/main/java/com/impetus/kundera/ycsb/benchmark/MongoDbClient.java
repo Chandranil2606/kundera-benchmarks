@@ -99,7 +99,7 @@ public class MongoDbClient extends DB
             System.exit(1);
         }
 
-        synchronized (mongo)
+        synchronized (host)
         {
             if (mongo == null)
             {
